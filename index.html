@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A romantic tribute to Renuka">
+    <title>Renuka ✨</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Allura&family=Parisienne&display=swap"
+        rel="stylesheet">
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'great-vibes': ['Great Vibes', 'cursive'],
+                        'allura': ['Allura', 'cursive'],
+                        'parisienne': ['Parisienne', 'cursive'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite',
+                        'slide-in': 'slideIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            '0%, 100%': { opacity: '0.8' },
+                            '50%': { opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- D3.js Library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Great Vibes', cursive;
+            overflow: hidden;
+        }
+
+        #canvas,
+        #svg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #svg-layer {
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .heart-decoration {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .heart-left {
+            animation-delay: 0s;
+        }
+
+        .heart-right {
+            animation-delay: 1.5s;
+        }
+    </style>
+</head>
+
+<body class="bg-black">
+    <!-- Canvas for D3.js animations -->
+    <canvas id="canvas"></canvas>
+    <svg id="svg-layer"></svg>
+
+    <!-- Main Content -->
+    <main class="fixed inset-0 flex items-center justify-center z-10 pointer-events-none">
+        <h1 class="font-great-vibes text-white text-8xl md:text-9xl lg:text-[12rem] text-center relative select-none">
+            Renuka
+            <span class="heart-decoration absolute -top-8 -left-16 text-5xl">💕</span>
+            <span class="heart-decoration absolute -bottom-8 -right-16 text-5xl">💕</span>
+        </h1>
+    </main>
+
+    <!-- Vertical Background Switcher - Right Side -->
+    <div class="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 animate-slide-in">
+        <!-- Header -->
+        <div
+            class="bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-500/20 backdrop-blur-xl rounded-2xl p-4 border border-white/20 shadow-2xl">
+            <div class="flex items-center gap-3">
+                <svg class="w-6 h-6 text-pink-300 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01">
+                    </path>
+                </svg>
+                <span class="font-parisienne text-white text-xl">Scenes</span>
+            </div>
+        </div>
+
+        <!-- Background Buttons -->
+        <button
+            class="bg-btn group relative bg-gradient-to-br from-pink-500/30 via-pink-400/20 to-pink-500/30 backdrop-blur-xl rounded-2xl p-4 border-2 border-pink-400/50 hover:border-pink-300 transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-pink-500/50 active"
+            data-bg="aurora" data-tooltip="Aurora">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl group-hover:scale-125 transition-transform duration-300">🌌</span>
+                <span class="font-parisienne text-white text-lg">Aurora</span>
+            </div>
+            <div
+                class="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            </div>
+        </button>
+
+        <button
+            class="bg-btn group relative bg-gradient-to-br from-red-500/30 via-pink-400/20 to-red-500/30 backdrop-blur-xl rounded-2xl p-4 border-2 border-red-400/50 hover:border-red-300 transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-red-500/50"
+            data-bg="hearts" data-tooltip="Hearts">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl group-hover:scale-125 transition-transform duration-300">💕</span>
+                <span class="font-parisienne text-white text-lg">Hearts</span>
+            </div>
+            <div
+                class="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            </div>
+        </button>
+
+        <button
+            class="bg-btn group relative bg-gradient-to-br from-pink-500/30 via-purple-400/20 to-pink-500/30 backdrop-blur-xl rounded-2xl p-4 border-2 border-pink-400/50 hover:border-pink-300 transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-pink-500/50"
+            data-bg="flowers" data-tooltip="Flowers">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl group-hover:scale-125 transition-transform duration-300">🌸</span>
+                <span class="font-parisienne text-white text-lg">Flowers</span>
+            </div>
+            <div
+                class="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            </div>
+        </button>
+
+        <button
+            class="bg-btn group relative bg-gradient-to-br from-yellow-500/30 via-blue-400/20 to-yellow-500/30 backdrop-blur-xl rounded-2xl p-4 border-2 border-yellow-400/50 hover:border-yellow-300 transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-yellow-500/50"
+            data-bg="stars" data-tooltip="Stars">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl group-hover:scale-125 transition-transform duration-300">✨</span>
+                <span class="font-parisienne text-white text-lg">Stars</span>
+            </div>
+            <div
+                class="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            </div>
+        </button>
+
+        <button
+            class="bg-btn group relative bg-gradient-to-br from-purple-600/30 via-purple-400/20 to-purple-600/30 backdrop-blur-xl rounded-2xl p-4 border-2 border-purple-400/50 hover:border-purple-300 transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50"
+            data-bg="bts" data-tooltip="BTS">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl group-hover:scale-125 transition-transform duration-300">💜</span>
+                <span class="font-parisienne text-white text-lg">BTS</span>
+            </div>
+            <div
+                class="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            </div>
+        </button>
+
+        <button
+            class="bg-btn group relative bg-gradient-to-br from-orange-500/30 via-red-400/20 to-orange-500/30 backdrop-blur-xl rounded-2xl p-4 border-2 border-orange-400/50 hover:border-orange-300 transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-orange-500/50"
+            data-bg="lanterns" data-tooltip="Lanterns">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl group-hover:scale-125 transition-transform duration-300">🏮</span>
+                <span class="font-parisienne text-white text-lg">Lanterns</span>
+            </div>
+            <div
+                class="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            </div>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="interactions.js"></script>
+    <script src="backgrounds/aurora.js"></script>
+    <script src="backgrounds/hearts.js"></script>
+    <script src="backgrounds/flowers.js"></script>
+    <script src="backgrounds/stars.js"></script>
+    <script src="backgrounds/bts.js"></script>
+    <script src="backgrounds/lanterns.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
