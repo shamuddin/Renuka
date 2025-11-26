@@ -92,6 +92,9 @@ class InteractionSystem {
             case 'lanterns':
                 this.createLanternsEffect(x, y);
                 break;
+            case 'loveletters':
+                this.createLoveLettersEffect(x, y);
+                break;
             default:
                 this.createAuroraEffect(x, y);
         }
@@ -256,6 +259,36 @@ class InteractionSystem {
             });
         }
     }
+
+    // Love Letters: Pink hearts and envelope particles
+    createLoveLettersEffect(x, y) {
+        const colors = [
+            'hsla(340, 100%, 70%, 0.9)',
+            'hsla(320, 100%, 75%, 0.9)',
+            'hsla(350, 100%, 80%, 0.9)',
+            'hsla(330, 90%, 65%, 0.9)'
+        ];
+
+        for (let i = 0; i < 30; i++) {
+            const angle = (Math.PI * 2 * i) / 30;
+            const velocity = Math.random() * 5 + 3;
+
+            this.particles.push({
+                x: x,
+                y: y,
+                vx: Math.cos(angle) * velocity,
+                vy: Math.sin(angle) * velocity,
+                size: Math.random() * 6 + 3,
+                life: 1,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                type: i % 3 === 0 ? 'heart' : 'circle',
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.15
+            });
+        }
+    }
+
+
 
     // Update particles
     update() {

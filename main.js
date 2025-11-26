@@ -16,7 +16,9 @@ class App {
             flowers: null,
             stars: null,
             bts: null,
-            lanterns: null
+            lanterns: null,
+            loveletters: null,
+
         };
 
         this.init();
@@ -96,6 +98,9 @@ class App {
                     break;
                 case 'lanterns':
                     this.backgrounds[name] = new LanternsBackground(this.canvas, this.ctx, this.svg);
+                    break;
+                case 'loveletters':
+                    this.backgrounds[name] = new LoveLettersBackground(this.canvas, this.ctx, this.svg);
                     break;
             }
         }
