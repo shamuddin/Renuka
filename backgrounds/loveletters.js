@@ -562,3 +562,4 @@ class LoveLettersBackground {
 }
 
 window.LoveLettersBackground = LoveLettersBackground;
+
