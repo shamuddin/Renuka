@@ -1,5 +1,5 @@
 // ===== Blooming Flower Field =====
-// Flowers that bloom and petals that fall
+// Flowers that bloom and petals that fall - Pink/Cream Theme
 
 class FlowersBackground {
     constructor(canvas, ctx, svg) {
@@ -45,10 +45,10 @@ class FlowersBackground {
     getFlowerColor() {
         const colors = [
             { primary: '#ff69b4', secondary: '#ffb3d9' },
-            { primary: '#d4a5d4', secondary: '#e6d4e6' },
-            { primary: '#ffb3ba', secondary: '#ffe4e6' },
             { primary: '#ff85a2', secondary: '#ffc4d6' },
-            { primary: '#ffa8c5', secondary: '#ffd4e5' }
+            { primary: '#ffb3c6', secondary: '#ffe4e6' },
+            { primary: '#ffa8c5', secondary: '#ffd4e5' },
+            { primary: '#ff6b9d', secondary: '#ff8fab' }
         ];
         return colors[Math.floor(Math.random() * colors.length)];
     }
@@ -113,11 +113,12 @@ class FlowersBackground {
     }
 
     draw() {
-        // Spring gradient background
+        // Cream/pink gradient background
         const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-        gradient.addColorStop(0, '#ffd4e5');
-        gradient.addColorStop(0.5, '#ffe9f0');
-        gradient.addColorStop(1, '#8dc6ff');
+        gradient.addColorStop(0, '#fff8f1');
+        gradient.addColorStop(0.4, '#ffe4e6');
+        gradient.addColorStop(0.8, '#fff0f3');
+        gradient.addColorStop(1, '#ffe8e8');
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -131,7 +132,7 @@ class FlowersBackground {
             this.ctx.rotate(sway);
 
             // Draw stem
-            this.ctx.strokeStyle = '#4a7c59';
+            this.ctx.strokeStyle = '#7fb069';
             this.ctx.lineWidth = 3;
             this.ctx.beginPath();
             this.ctx.moveTo(0, 0);

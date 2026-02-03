@@ -9,6 +9,7 @@ class App {
         this.currentBackground = null;
         this.interactions = null;
         this.animationFrame = null;
+        this.isInitialized = false;
 
         this.backgrounds = {
             aurora: null,
@@ -25,11 +26,17 @@ class App {
     }
 
     init() {
+        console.log('App initializing...');
         this.setupCanvas();
         this.setupInteractions();
         this.setupBackgroundSwitcher();
-        this.switchBackground('aurora'); // Start with Aurora
+        
+        // Start with aurora background
+        this.switchBackground('aurora');
+        
         this.animate();
+        this.isInitialized = true;
+        console.log('App initialized successfully');
 
         // Handle window resize
         window.addEventListener('resize', () => this.handleResize());
@@ -55,20 +62,61 @@ class App {
 
     setupBackgroundSwitcher() {
         const buttons = document.querySelectorAll('.bg-btn');
+        console.log('Setting up background buttons:', buttons.length);
 
-        buttons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const bgName = button.getAttribute('data-bg');
-                this.switchBackground(bgName);
-
-                // Update active state
-                buttons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
+        buttons.forEach((button) => {
+            // Use direct binding without cloning to preserve DOM structure
+            const bgName = button.getAttribute('data-bg');
+            
+            // Remove any existing listeners first
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+            
+            // Add click listener with proper binding
+            newButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const clickedBg = newButton.getAttribute('data-bg');
+                console.log('Button clicked:', clickedBg);
+                
+                this.switchBackground(clickedBg);
+                this.updateActiveButton(clickedBg);
             });
+        });
+        
+        console.log('Background switcher setup complete');
+    }
+    
+    updateActiveButton(activeBg) {
+        document.querySelectorAll('.bg-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-bg') === activeBg) {
+                btn.classList.add('active');
+            }
         });
     }
 
     switchBackground(name) {
+        console.log('Switching background to:', name);
+        
+        // Validate background class exists
+        const backgroundClasses = {
+            'aurora': typeof AuroraBackground !== 'undefined' ? AuroraBackground : null,
+            'hearts': typeof HeartsBackground !== 'undefined' ? HeartsBackground : null,
+            'flowers': typeof FlowersBackground !== 'undefined' ? FlowersBackground : null,
+            'stars': typeof StarsBackground !== 'undefined' ? StarsBackground : null,
+            'bts': typeof BTSBackground !== 'undefined' ? BTSBackground : null,
+            'lanterns': typeof LanternsBackground !== 'undefined' ? LanternsBackground : null,
+            'loveletters': typeof LoveLettersBackground !== 'undefined' ? LoveLettersBackground : null,
+            'anniversary': typeof AnniversaryBackground !== 'undefined' ? AnniversaryBackground : null,
+        };
+        
+        if (!backgroundClasses[name]) {
+            console.error('Background class not found for:', name);
+            return;
+        }
+        
         // Stop current background
         if (this.currentBackground) {
             this.currentBackground.stop();
@@ -76,41 +124,30 @@ class App {
 
         // Clear canvas and SVG
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        d3.select(this.svg).selectAll('*').remove();
+        if (typeof d3 !== 'undefined') {
+            d3.select(this.svg).selectAll('*').remove();
+        }
 
         // Create new background if not exists
         if (!this.backgrounds[name]) {
-            switch (name) {
-                case 'aurora':
-                    this.backgrounds[name] = new AuroraBackground(this.canvas, this.ctx, this.svg);
-                    break;
-                case 'hearts':
-                    this.backgrounds[name] = new HeartsBackground(this.canvas, this.ctx, this.svg);
-                    break;
-                case 'flowers':
-                    this.backgrounds[name] = new FlowersBackground(this.canvas, this.ctx, this.svg);
-                    break;
-                case 'stars':
-                    this.backgrounds[name] = new StarsBackground(this.canvas, this.ctx, this.svg);
-                    break;
-                case 'bts':
-                    this.backgrounds[name] = new BTSBackground(this.canvas, this.ctx, this.svg);
-                    break;
-                case 'lanterns':
-                    this.backgrounds[name] = new LanternsBackground(this.canvas, this.ctx, this.svg);
-                    break;
-                case 'loveletters':
-                    this.backgrounds[name] = new LoveLettersBackground(this.canvas, this.ctx, this.svg);
-                    break;
-                case 'anniversary':
-                    this.backgrounds[name] = new AnniversaryBackground(this.canvas, this.ctx, this.svg);
-                    break;
+            try {
+                this.backgrounds[name] = new backgroundClasses[name](this.canvas, this.ctx, this.svg);
+            } catch (err) {
+                console.error('Error creating background:', name, err);
+                return;
             }
         }
 
         // Initialize and set as current
         this.currentBackground = this.backgrounds[name];
-        this.currentBackground.init();
+        if (this.currentBackground) {
+            try {
+                this.currentBackground.init();
+                console.log('Background initialized:', name);
+            } catch (err) {
+                console.error('Error initializing background:', name, err);
+            }
+        }
 
         // Notify interactions system of background change
         if (this.interactions) {
@@ -125,14 +162,16 @@ class App {
     animate() {
         // Update and draw current background
         if (this.currentBackground) {
-            const mousePos = this.interactions.getMousePos();
+            const mousePos = this.interactions ? this.interactions.getMousePos() : { x: 0, y: 0 };
             this.currentBackground.update(mousePos);
             this.currentBackground.draw();
         }
 
         // Update and draw interactions (cursor trail and bloom effects)
-        this.interactions.update();
-        this.interactions.draw();
+        if (this.interactions) {
+            this.interactions.update();
+            this.interactions.draw();
+        }
 
         // Continue animation loop
         this.animationFrame = requestAnimationFrame(() => this.animate());
@@ -140,10 +179,13 @@ class App {
 }
 
 // Start the app when DOM is ready
+function startApp() {
+    console.log('Starting app...');
+    window.app = new App();
+}
+
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        new App();
-    });
+    document.addEventListener('DOMContentLoaded', startApp);
 } else {
-    new App();
+    startApp();
 }

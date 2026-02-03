@@ -1,5 +1,5 @@
 // ===== Modern Elegant Love Letters =====
-// Luxurious design with hearts and roses, mobile responsive
+// Luxurious design with hearts and roses, mobile responsive - Pink/Cream Theme
 
 class LoveLettersBackground {
     constructor(canvas, ctx, svg) {
@@ -15,21 +15,21 @@ class LoveLettersBackground {
 
         this.colors = {
             envelope: {
-                white: ['#ffffff', '#f8f8f8'],
+                white: ['#ffffff', '#fff8f1'],
                 cream: ['#fef9f3', '#fdf5eb'],
                 rose: ['#fff5f7', '#ffe8ee']
             },
             accent: {
-                deepRose: '#d4376e',
-                burgundy: '#8b2942',
+                deepRose: '#ff6b9d',
+                burgundy: '#c44569',
                 gold: '#d4af37',
-                blush: '#ffc0cb',
-                crimson: '#dc143c'
+                blush: '#ffb3c6',
+                crimson: '#ff85a2'
             },
             background: {
-                dark: '#1a1525',
-                mid: '#2d2438',
-                light: '#3e3550'
+                light1: '#fff8f1',
+                light2: '#ffe4e6',
+                light3: '#fff0f3'
             }
         };
 
@@ -206,7 +206,7 @@ class LoveLettersBackground {
 
         const msg = document.createElement('div');
         msg.textContent = letter.message;
-        msg.style.cssText = `position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:linear-gradient(135deg,#fff 0%,#fff5f7 100%);border:4px solid ${this.colors.accent.deepRose};padding:${padding};border-radius:20px;color:${this.colors.accent.burgundy};font-family:'Great Vibes',cursive;font-size:${fontSize};text-align:center;z-index:1000;white-space:pre-line;line-height:1.8;opacity:0;pointer-events:auto;max-width:${isMobile ? '85vw' : '600px'};max-height:${isMobile ? '70vh' : '80vh'};overflow-y:auto`;
+        msg.style.cssText = `position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:linear-gradient(135deg,#fff8f1 0%,#fff0f3 100%);border:4px solid ${this.colors.accent.deepRose};padding:${padding};border-radius:20px;color:${this.colors.accent.burgundy};font-family:'Great Vibes',cursive;font-size:${fontSize};text-align:center;z-index:1000;white-space:pre-line;line-height:1.8;opacity:0;pointer-events:auto;max-width:${isMobile ? '85vw' : '600px'};max-height:${isMobile ? '70vh' : '80vh'};overflow-y:auto`;
 
         const closeBtn = document.createElement('button');
         closeBtn.innerHTML = '×';
@@ -277,10 +277,11 @@ class LoveLettersBackground {
         if (!this.active) return;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // Light cream/pink gradient background
         const bg = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-        bg.addColorStop(0, this.colors.background.dark);
-        bg.addColorStop(0.5, this.colors.background.mid);
-        bg.addColorStop(1, this.colors.background.light);
+        bg.addColorStop(0, this.colors.background.light1);
+        bg.addColorStop(0.5, this.colors.background.light2);
+        bg.addColorStop(1, this.colors.background.light3);
         this.ctx.fillStyle = bg;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 

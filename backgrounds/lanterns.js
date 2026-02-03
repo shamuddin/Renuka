@@ -1,5 +1,5 @@
 // ===== Sky Lantern Festival =====
-// Floating lanterns with realistic physics and warm glow
+// Floating lanterns with realistic physics and warm glow - Pink/Cream Theme
 
 class LanternsBackground {
     constructor(canvas, ctx, svg) {
@@ -33,9 +33,21 @@ class LanternsBackground {
                 flickerPhase: Math.random() * Math.PI * 2,
                 flickerSpeed: 0.1 + Math.random() * 0.1,
                 depth: Math.random(),
-                rotation: (Math.random() - 0.5) * 0.2
+                rotation: (Math.random() - 0.5) * 0.2,
+                color: this.getLanternColor()
             });
         }
+    }
+
+    getLanternColor() {
+        const colors = [
+            { body: '#ffb3c6', glow: '#ff69b4' },      // Pink
+            { body: '#ffc4d6', glow: '#ff85a2' },      // Light pink
+            { body: '#ffd4c4', glow: '#ff9966' },      // Peach
+            { body: '#ffe4e6', glow: '#ffb3c6' },      // Rose
+            { body: '#fff0f3', glow: '#ffc4d6' }       // Cream pink
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
     }
 
     update(mousePos) {
@@ -84,12 +96,12 @@ class LanternsBackground {
     }
 
     draw() {
-        // Night sky gradient
+        // Light cream/pink gradient background
         const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-        gradient.addColorStop(0, '#0a0a1a');
-        gradient.addColorStop(0.3, '#1a1a3e');
-        gradient.addColorStop(0.7, '#2e1a47');
-        gradient.addColorStop(1, '#3d2963');
+        gradient.addColorStop(0, '#fff8f1');
+        gradient.addColorStop(0.3, '#ffe4e6');
+        gradient.addColorStop(0.7, '#fff0f3');
+        gradient.addColorStop(1, '#ffe8e8');
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -99,7 +111,7 @@ class LanternsBackground {
 
             // Depth-based scaling and opacity
             const scale = 0.5 + lantern.depth * 0.5;
-            const opacity = 0.4 + lantern.depth * 0.6;
+            const opacity = 0.5 + lantern.depth * 0.5;
             this.ctx.globalAlpha = opacity;
 
             this.ctx.translate(lantern.x, lantern.y);
@@ -107,15 +119,16 @@ class LanternsBackground {
             this.ctx.scale(scale, scale);
 
             const size = lantern.size;
+            const color = lantern.color;
 
             // Lantern body (paper)
             const bodyGradient = this.ctx.createLinearGradient(-size, 0, size, 0);
-            bodyGradient.addColorStop(0, '#ff9966');
-            bodyGradient.addColorStop(0.5, '#ffcc99');
-            bodyGradient.addColorStop(1, '#ff9966');
+            bodyGradient.addColorStop(0, color.body);
+            bodyGradient.addColorStop(0.5, '#fff8f8');
+            bodyGradient.addColorStop(1, color.body);
 
             this.ctx.fillStyle = bodyGradient;
-            this.ctx.strokeStyle = '#cc6633';
+            this.ctx.strokeStyle = '#ffb3c6';
             this.ctx.lineWidth = 1;
 
             // Main lantern shape
@@ -133,7 +146,7 @@ class LanternsBackground {
             this.ctx.stroke();
 
             // Horizontal ribs
-            this.ctx.strokeStyle = 'rgba(204, 102, 51, 0.5)';
+            this.ctx.strokeStyle = 'rgba(255, 179, 198, 0.5)';
             this.ctx.lineWidth = 1;
             for (let i = -0.6; i <= 0.6; i += 0.4) {
                 this.ctx.beginPath();
@@ -145,10 +158,10 @@ class LanternsBackground {
             // Flame glow (flickering)
             const flicker = 0.7 + Math.sin(this.time * lantern.flickerSpeed + lantern.flickerPhase) * 0.3;
             const glowGradient = this.ctx.createRadialGradient(0, 0, 0, 0, 0, size * 1.5);
-            glowGradient.addColorStop(0, `rgba(255, 200, 100, ${0.8 * flicker})`);
-            glowGradient.addColorStop(0.3, `rgba(255, 150, 50, ${0.5 * flicker})`);
-            glowGradient.addColorStop(0.7, `rgba(255, 100, 0, ${0.2 * flicker})`);
-            glowGradient.addColorStop(1, 'rgba(255, 0, 0, 0)');
+            glowGradient.addColorStop(0, `rgba(255, 105, 180, ${0.6 * flicker})`);
+            glowGradient.addColorStop(0.3, `rgba(255, 133, 162, ${0.35 * flicker})`);
+            glowGradient.addColorStop(0.7, `rgba(255, 182, 193, ${0.15 * flicker})`);
+            glowGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
             this.ctx.fillStyle = glowGradient;
             this.ctx.beginPath();
@@ -156,23 +169,23 @@ class LanternsBackground {
             this.ctx.fill();
 
             // Flame inside
-            this.ctx.fillStyle = `rgba(255, 220, 100, ${flicker})`;
-            this.ctx.shadowBlur = 20;
-            this.ctx.shadowColor = '#ffaa00';
+            this.ctx.fillStyle = `rgba(255, 182, 193, ${flicker})`;
+            this.ctx.shadowBlur = 15;
+            this.ctx.shadowColor = '#ffb3c6';
             this.ctx.beginPath();
             this.ctx.ellipse(0, size * 0.1, size * 0.15, size * 0.25, 0, 0, Math.PI * 2);
             this.ctx.fill();
 
             // Flame tip
-            this.ctx.fillStyle = `rgba(255, 150, 50, ${flicker})`;
-            this.ctx.shadowBlur = 15;
-            this.ctx.shadowColor = '#ff6600';
+            this.ctx.fillStyle = `rgba(255, 133, 162, ${flicker})`;
+            this.ctx.shadowBlur = 12;
+            this.ctx.shadowColor = '#ff85a2';
             this.ctx.beginPath();
             this.ctx.ellipse(0, -size * 0.05, size * 0.1, size * 0.2, 0, 0, Math.PI * 2);
             this.ctx.fill();
 
             // Top cap
-            this.ctx.fillStyle = '#8b4513';
+            this.ctx.fillStyle = '#d4849c';
             this.ctx.shadowBlur = 0;
             this.ctx.beginPath();
             this.ctx.rect(-size * 0.6, -size * 0.85, size * 1.2, size * 0.1);

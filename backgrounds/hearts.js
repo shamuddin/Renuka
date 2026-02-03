@@ -1,5 +1,5 @@
 // ===== Floating Heart Constellation =====
-// Hearts connected in a constellation with force simulation
+// Hearts connected in a constellation with force simulation - Pink/Cream Theme
 
 class HeartsBackground {
     constructor(canvas, ctx, svg) {
@@ -40,11 +40,13 @@ class HeartsBackground {
 
     getHeartColor() {
         const colors = [
-            '#f7cac9', // Rose gold
-            '#ff6b9d', // Pink
-            '#c44569', // Deep pink
-            '#ff85a2', // Light pink
-            '#ffa8c5'  // Soft pink
+            '#ff6b9d', // Hot pink
+            '#ff8fab', // Light pink
+            '#ffc4d6', // Soft pink
+            '#ffb3c6', // Rose pink
+            '#ffa8c5', // Salmon pink
+            '#ffd4e5', // Pale pink
+            '#ff85a2'  // Coral pink
         ];
         return colors[Math.floor(Math.random() * colors.length)];
     }
@@ -80,15 +82,16 @@ class HeartsBackground {
     }
 
     draw() {
-        // Dark gradient background
+        // Light pink/cream gradient background
         const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-        gradient.addColorStop(0, '#1a0a1e');
-        gradient.addColorStop(1, '#3d1e4f');
+        gradient.addColorStop(0, '#fff8f1');
+        gradient.addColorStop(0.5, '#ffe4e6');
+        gradient.addColorStop(1, '#fff0f3');
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         // Draw connection lines
-        this.ctx.strokeStyle = 'rgba(255, 182, 193, 0.15)';
+        this.ctx.strokeStyle = 'rgba(255, 105, 180, 0.2)';
         this.ctx.lineWidth = 1;
 
         for (let i = 0; i < this.hearts.length; i++) {
@@ -101,7 +104,7 @@ class HeartsBackground {
 
                 if (distance < 150) {
                     this.ctx.save();
-                    this.ctx.globalAlpha = (1 - distance / 150) * 0.3;
+                    this.ctx.globalAlpha = (1 - distance / 150) * 0.4;
                     this.ctx.beginPath();
                     this.ctx.moveTo(h1.x, h1.y);
                     this.ctx.lineTo(h2.x, h2.y);
@@ -119,7 +122,7 @@ class HeartsBackground {
             this.ctx.save();
             this.ctx.translate(heart.x, heart.y);
             this.ctx.fillStyle = heart.color;
-            this.ctx.shadowBlur = 20;
+            this.ctx.shadowBlur = 15;
             this.ctx.shadowColor = heart.color;
 
             // Draw heart shape

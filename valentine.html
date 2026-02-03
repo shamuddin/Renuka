@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Valentine's Week 💕</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&family=Great+Vibes&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet">
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'pacifico': ['Pacifico', 'cursive'],
+                        'quicksand': ['Quicksand', 'sans-serif'],
+                        'great-vibes': ['Great Vibes', 'cursive'],
+                        'dancing': ['Dancing Script', 'cursive'],
+                    },
+                    colors: {
+                        'love-pink': '#ff6b9d',
+                        'love-red': '#b80b15',
+                        'love-cream': '#fff8f1',
+                        'love-rose': '#ed7ea6',
+                        'love-dark': '#99052e',
+                        'rose-red': '#e91e63',
+                        'choco-brown': '#8d6e63',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fff8f1 0%, #ffe4e6 50%, #fff0f3 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Floating Background */
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .float-item {
+            position: absolute;
+            font-size: 20px;
+            animation: float-around 20s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes float-around {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.3;
+            }
+
+            90% {
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(720deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 60px rgba(237, 126, 166, 0.3);
+            width: 100%;
+            max-width: 420px;
+        }
+
+        /* Back Link */
+        .back-link {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            background: linear-gradient(135deg, #5f27cd 0%, #341f97 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(95, 39, 205, 0.5);
+            font-size: 0.85rem;
+        }
+
+        /* Love Button */
+        .btn-love {
+            background: linear-gradient(135deg, #ed7ea6 0%, #ff6b9d 50%, #e91e63 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(237, 126, 166, 0.5);
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .btn-love:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(237, 126, 166, 0.6);
+        }
+
+        /* Day Card */
+        .day-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 2px solid rgba(237, 126, 166, 0.3);
+            box-shadow: 0 20px 60px rgba(237, 126, 166, 0.25);
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* Day Content Layout - 2 Column */
+        .day-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .day-left {
+            text-align: center;
+        }
+
+        .day-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .day-game-section {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4ec 100%);
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid #ed7ea6;
+            height: 100%;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .day-game-section .game-title {
+            font-family: 'Pacifico', cursive;
+            color: #99052e;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        /* GIF Container - No border/shadow */
+        .gif-container {
+            border-radius: 20px;
+            overflow: visible;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .calendar-day {
+            background: white;
+            border-radius: 24px;
+            padding: 30px 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-width: 140px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-day:hover:not(.locked) {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(237, 126, 166, 0.3);
+        }
+
+        .calendar-day.unlocked {
+            border-color: #ed7ea6;
+            background: linear-gradient(135deg, #fff8f1 0%, #ffe4e6 100%);
+        }
+
+        .calendar-day.locked {
+            background: #f5f5f5;
+            border-color: #ddd;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .calendar-day.active {
+            border-color: #e91e63;
+            box-shadow: 0 0 30px rgba(233, 30, 99, 0.4);
+        }
+
+        .day-icon {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .day-name {
+            font-family: 'Pacifico', cursive;
+            color: #99052e;
+            font-size: 1.3rem;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .day-date {
+            font-size: 1rem;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        /* Love Letter */
+        .love-letter {
+            background: linear-gradient(135deg, #fff8f1 0%, #ffe4e6 100%);
+            border: 3px solid #ed7ea6;
+            border-radius: 25px;
+            padding: 70px 30px 30px 30px;
+            position: relative;
+            margin-top: 35px;
+        }
+
+        .love-letter::before {
+            content: '💌';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            background: white;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 3px solid #ed7ea6;
+            box-shadow: 0 4px 15px rgba(237, 126, 166, 0.3);
+            z-index: 10;
+        }
+
+        /* Countdown */
+        .countdown-box {
+            background: linear-gradient(135deg, #ed7ea6 0%, #e91e63 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(237, 126, 166, 0.4);
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════ */
+        /* MINI GAMES STYLES */
+        /* ═══════════════════════════════════════════════════════════════════════ */
+
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .game-section {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4ec 100%);
+            border-radius: 20px;
+            padding: 15px;
+            border: 2px solid #ed7ea6;
+        }
+
+        .game-section.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .game-title {
+            font-family: 'Pacifico', cursive;
+            color: #99052e;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, #ed7ea6 0%, #e91e63 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            margin: 3px;
+        }
+
+        .game-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(237, 126, 166, 0.5);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #9e9e9e 0%, #616161 100%);
+        }
+
+        /* Rose Day - Petal Shower Game */
+        .petal-game {
+            position: relative;
+            height: 180px;
+            background: linear-gradient(to bottom, #ffe4e6, #fff8f1);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .petal {
+            position: absolute;
+            font-size: 22px;
+            cursor: pointer;
+            animation: fall linear;
+            user-select: none;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-50px) rotate(0deg);
+            }
+
+            to {
+                transform: translateY(200px) rotate(360deg);
+            }
+        }
+
+        .score-display {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+            color: #e91e63;
+            font-size: 0.85rem;
+            z-index: 10;
+        }
+
+        /* Propose Day - Ring Catch Game - REDESIGNED */
+        .ring-game {
+            position: relative;
+            height: 180px;
+            background: linear-gradient(to bottom, #e3f2fd 0%, #f3e5f5 50%, #fff8f1 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #ce93d8;
+        }
+
+        .basket {
+            position: absolute;
+            bottom: 10px;
+            width: 70px;
+            height: 50px;
+            background: linear-gradient(135deg, #ffeb3b, #ffc107);
+            border-radius: 0 0 35px 35px;
+            border: 3px solid #ff8f00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: left 0.05s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .basket::before {
+            content: '🧺';
+        }
+
+        .falling-ring {
+            position: absolute;
+            font-size: 28px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            animation: ring-fall 2s linear;
+        }
+
+        @keyframes ring-fall {
+            from {
+                transform: translateY(-40px) rotate(0deg);
+            }
+
+            to {
+                transform: translateY(200px) rotate(360deg);
+            }
+        }
+
+        /* Chocolate Day - Memory Game */
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            max-width: 100%;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #8d6e63, #6d4c41);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #5d4037;
+        }
+
+        .memory-card.flipped {
+            background: linear-gradient(135deg, #fff8f1, #ffe4e6);
+            transform: rotateY(180deg);
+        }
+
+        .memory-card.matched {
+            background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+            border-color: #4caf50;
+            animation: matchPulse 0.5s;
+        }
+
+        @keyframes matchPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Teddy Day - Dress Up Game - FIXED */
+        .teddy-dressup {
+            text-align: center;
+        }
+
+        .teddy-display {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #fff8f1, #ffe4e6);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-size: 80px;
+        }
+
+        .teddy-base {
+            z-index: 1;
+        }
+
+        .teddy-hat {
+            position: absolute;
+            top: 10px;
+            font-size: 40px;
+            z-index: 2;
+        }
+
+        .teddy-bow {
+            position: absolute;
+            top: 35px;
+            font-size: 30px;
+            z-index: 3;
+        }
+
+        .teddy-heart {
+            position: absolute;
+            bottom: 25px;
+            font-size: 35px;
+            z-index: 2;
+            animation: heartbeat 1s infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .accessory-btn {
+            background: white;
+            border: 2px solid #ed7ea6;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin: 3px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .accessory-btn:hover {
+            background: #ffe4e6;
+            transform: scale(1.05);
+        }
+
+        .accessory-btn.active {
+            background: linear-gradient(135deg, #ed7ea6, #e91e63);
+            color: white;
+            border-color: #e91e63;
+        }
+
+        /* Promise Day - Spin Wheel - FIXED */
+        .wheel-wrapper {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+        }
+
+        .wheel-segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .wheel-segment span {
+            transform: rotate(22.5deg) skewY(-45deg);
+            font-size: 20px;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            border: 3px solid #e91e63;
+            z-index: 10;
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            z-index: 20;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .promise-text {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 12px;
+            font-style: italic;
+            color: #99052e;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            border: 2px solid #ed7ea6;
+        }
+
+        /* Hug Day - Love Collector Game (NEW) */
+        .collector-game {
+            position: relative;
+            height: 180px;
+            background: linear-gradient(to bottom, #fff3e0, #ffe0b2);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #ff9800;
+        }
+
+        .player-bear {
+            position: absolute;
+            bottom: 10px;
+            font-size: 40px;
+            transition: left 0.1s;
+        }
+
+        .falling-item {
+            position: absolute;
+            font-size: 24px;
+            animation: item-fall 2.5s linear;
+        }
+
+        @keyframes item-fall {
+            from {
+                transform: translateY(-40px);
+            }
+
+            to {
+                transform: translateY(200px);
+            }
+        }
+
+        /* Kiss Day - Find the Prince */
+        .frog-pond {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 100%;
+        }
+
+        .frog {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid #81c784;
+        }
+
+        .frog:hover {
+            transform: scale(1.05);
+            background: #a5d6a7;
+        }
+
+        .frog.revealed {
+            background: linear-gradient(135deg, #fff8f1, #ffe4e6);
+            border-color: #e91e63;
+        }
+
+        .frog.prince {
+            animation: princeReveal 0.5s;
+        }
+
+        @keyframes princeReveal {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Valentine's Day - Gift Box Opening */
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 100%;
+        }
+
+        .gift-box {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid #ad1457;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.5);
+        }
+
+        .gift-box.opened {
+            background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+            border-color: #4caf50;
+            animation: giftOpen 0.5s;
+        }
+
+        @keyframes giftOpen {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2) rotate(10deg);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .gift-surprise {
+            font-size: 2rem;
+        }
+
+        .gift-message {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+            color: #99052e;
+            border: 2px solid #ed7ea6;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .glass-card {
+                margin: 10px auto;
+                padding: 20px 15px !important;
+                max-width: 100%;
+                width: calc(100% - 20px);
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+                padding: 0 5px;
+            }
+
+            .calendar-day {
+                padding: 20px 10px;
+                border-radius: 16px;
+                min-height: 120px;
+                min-width: 0;
+            }
+
+            .day-icon {
+                font-size: 2.5rem;
+                margin-bottom: 8px;
+            }
+
+            .day-name {
+                font-size: 1rem;
+            }
+
+            .day-date {
+                font-size: 0.8rem;
+            }
+
+            .day-content {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .day-left,
+            .day-right {
+                width: 100%;
+            }
+
+            .day-game-section {
+                min-height: auto;
+                padding: 15px;
+            }
+
+            .petal-game,
+            .ring-game,
+            .collector-game {
+                height: 180px !important;
+            }
+
+            .wheel-wrapper {
+                width: 160px !important;
+                height: 160px !important;
+            }
+
+            .games-container {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .day-card {
+                margin: 10px auto;
+                padding: 35px 15px 20px 15px !important;
+                max-width: 100%;
+                width: calc(100vw - 30px);
+            }
+
+            .day-card h2 {
+                font-size: 1.75rem !important;
+                margin-top: 2rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+
+            .love-letter {
+                padding: 55px 15px 20px 15px !important;
+                margin-top: 25px;
+                margin-bottom: 10px;
+                border-radius: 20px;
+            }
+
+            .love-letter::before {
+                font-size: 24px;
+                top: -30px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .love-letter h3 {
+                font-size: 1.1rem !important;
+            }
+
+            .love-letter p {
+                font-size: 0.85rem !important;
+            }
+
+            .gif-container {
+                margin: 10px auto !important;
+                width: 140px !important;
+                height: 140px !important;
+            }
+
+            .btn-love {
+                margin-top: 5px;
+                padding: 12px 25px !important;
+                font-size: 0.95rem !important;
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .back-link {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+                top: 8px;
+                left: 8px;
+            }
+
+            .countdown-number {
+                font-size: 1.5rem !important;
+            }
+
+            .countdown-box {
+                padding: 10px 12px !important;
+            }
+
+            .game-section {
+                padding: 12px;
+            }
+
+            .game-title {
+                font-size: 1rem;
+            }
+
+            .petal-game,
+            .ring-game,
+            .collector-game {
+                height: 150px;
+            }
+
+            .wheel-wrapper {
+                width: 150px;
+                height: 150px;
+            }
+
+            .teddy-display {
+                width: 120px;
+                height: 120px;
+                font-size: 60px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .calendar-grid {
+                gap: 10px;
+                padding: 0 3px;
+            }
+
+            .calendar-day {
+                padding: 15px 6px;
+                border-radius: 12px;
+                min-height: 100px;
+            }
+
+            .day-icon {
+                font-size: 2rem;
+                margin-bottom: 6px;
+            }
+
+            .day-name {
+                font-size: 0.8rem;
+            }
+
+            .day-date {
+                font-size: 0.7rem;
+            }
+
+            .day-card {
+                padding: 30px 12px 18px 12px !important;
+            }
+
+            .day-card h2 {
+                font-size: 1.5rem !important;
+                margin-top: 1rem !important;
+            }
+
+            .gif-container {
+                width: 100px !important;
+                height: 100px !important;
+            }
+
+            .love-letter {
+                padding: 45px 12px 15px 12px !important;
+                margin-top: 20px !important;
+            }
+
+            .love-letter::before {
+                font-size: 20px;
+                width: 38px;
+                height: 38px;
+                top: -25px;
+            }
+
+            .day-game-section {
+                padding: 12px;
+            }
+
+            .petal-game,
+            .ring-game,
+            .collector-game {
+                height: 160px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Back Link -->
+    <a href="index.html" class="back-link">← Back to Magic World</a>
+
+    <!-- Floating Background -->
+    <div class="floating-bg" id="floating-container"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- WELCOME PAGE -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div class="page active" id="page-welcome">
+        <div class="glass-card p-5 md:p-8 text-center max-w-md mx-auto relative"
+            style="width: calc(100vw - 30px); max-width: 420px;">
+            <!-- Floating Hearts Around -->
+            <div class="absolute -top-4 -left-4 text-3xl animate-pulse">💖</div>
+            <div class="absolute -top-3 -right-4 text-2xl animate-pulse" style="animation-delay: 0.5s;">💕</div>
+            <div class="absolute -bottom-4 -left-4 text-2xl animate-pulse" style="animation-delay: 1s;">💗</div>
+            <div class="absolute -bottom-3 -right-4 text-3xl animate-pulse" style="animation-delay: 1.5s;">💝</div>
+
+            <!-- Title -->
+            <div class="mb-4">
+                <h1 class="font-pacifico text-3xl md:text-5xl text-love-dark mb-2">Hey My Love! 👋</h1>
+                <p class="font-dancing text-lg md:text-2xl text-love-rose">I've got something special for you... 💕</p>
+            </div>
+
+            <!-- 🎨 WELCOME PAGE GIF -->
+            <div class="gif-container w-36 h-36 md:w-48 md:h-48 mx-auto mb-5">
+                <img src="Valentine%20Day%20Images/Front.gif" alt="Welcome Bear" onerror="this.style.display='none'">
+            </div>
+
+            <!-- Description -->
+            <div class="bg-gradient-to-r from-pink-100 to-rose-100 rounded-2xl p-4 mb-5 border-2 border-pink-200">
+                <p class="font-quicksand text-base md:text-lg text-gray-700">
+                    <span class="font-pacifico text-xl text-love-red">Welcome to our</span><br>
+                    <span class="font-great-vibes text-2xl md:text-3xl text-love-dark">Valentine's Week
+                        Adventure!</span> 🎉
+                </p>
+                <p class="font-quicksand text-sm text-gray-600 mt-2">
+                    8 days of surprises, love, and cute bears!<br>Each day unlocks on its special date! 🔓
+                </p>
+            </div>
+
+            <!-- Countdown -->
+            <div id="countdown-section" class="mb-5">
+                <p class="font-quicksand text-sm text-gray-600 mb-2">🕐 First surprise unlocks in:</p>
+                <div class="flex justify-center gap-2">
+                    <div class="countdown-box" style="padding: 10px 15px;">
+                        <div class="countdown-number text-xl" id="countdown-days">00</div>
+                        <div class="text-xs">Days</div>
+                    </div>
+                    <div class="countdown-box" style="padding: 10px 15px;">
+                        <div class="countdown-number text-xl" id="countdown-hours">00</div>
+                        <div class="text-xs">Hours</div>
+                    </div>
+                    <div class="countdown-box" style="padding: 10px 15px;">
+                        <div class="countdown-number text-xl" id="countdown-minutes">00</div>
+                        <div class="text-xs">Mins</div>
+                    </div>
+                    <div class="countdown-box" style="padding: 10px 15px;">
+                        <div class="countdown-number text-xl" id="countdown-seconds">00</div>
+                        <div class="text-xs">Secs</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enter Button -->
+            <button onclick="goToCalendar()" class="btn-love text-lg px-8 py-3">
+                Enter Our Love Calendar 💕
+            </button>
+
+            <p class="font-quicksand text-gray-500 mt-4 text-xs">Made with 💕 just for you My Love!</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- CALENDAR PAGE -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-calendar">
+        <div class="w-full mx-auto px-2" style="max-width: 100%; width: 95%;">
+            <div class="text-center mb-6">
+                <h1 class="font-pacifico text-3xl md:text-4xl text-love-dark mb-2">Our Valentine's Week 💕</h1>
+                <p class="font-quicksand text-base text-gray-600">Click on an unlocked day to see your surprise!</p>
+            </div>
+
+            <div class="glass-card" style="padding: 40px 50px; max-width: 100%;">
+                <div class="calendar-grid" id="calendar-grid"></div>
+            </div>
+
+            <!-- Legend -->
+            <div class="flex justify-center gap-4 mt-4 flex-wrap">
+                <div class="flex items-center gap-1">
+                    <div class="w-3 h-3 rounded-full bg-love-rose"></div>
+                    <span class="font-quicksand text-xs text-gray-600">Unlocked 🔓</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <div class="w-3 h-3 rounded-full bg-gray-400"></div>
+                    <span class="font-quicksand text-xs text-gray-600">Locked 🔒</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <div class="w-3 h-3 rounded-full bg-love-red animate-pulse"></div>
+                    <span class="font-quicksand text-xs text-gray-600">Today ✨</span>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <button onclick="goToPage('welcome')" class="btn-love text-base px-6 py-2">
+                    ← Back to Welcome
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- DAY PAGES -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+    <!-- ROSE DAY -->
+    <div class="page" id="page-rose">
+        <div class="day-card p-6 md:p-8 mx-auto relative">
+            <div
+                class="absolute -top-5 left-1/2 -translate-x-1/2 bg-rose-red text-white px-6 py-2 rounded-full font-pacifico text-sm md:text-base shadow-lg z-20">
+                🌹 Feb 7 - Rose Day</div>
+
+            <div class="day-content mt-6">
+                <!-- LEFT SIDE: Content -->
+                <div class="day-left">
+                    <h2 class="font-great-vibes text-3xl md:text-4xl text-love-dark mb-4">Rose Day</h2>
+
+                    <div class="gif-container w-36 h-36 md:w-44 md:h-44 mx-auto mb-4">
+                        <img src="Valentine%20Day%20Images/Rose%20Day.gif" alt="Rose Day"
+                            onerror="this.style.display='none'">
+                    </div>
+
+                    <div class="love-letter mb-4" style="margin-top: 25px; padding: 50px 20px 20px 20px;">
+                        <h3 class="font-pacifico text-lg text-rose-red mb-2">En Usuru,</h3>
+                        <p class="font-quicksand text-sm text-gray-700 leading-relaxed">
+                            Just like a rose spreads its fragrance, you fill my life with love and happiness. This rose
+                            is a symbol of my love for you - beautiful, timeless, and forever blooming. Happy Rose Day
+                            my love! 🌹💕
+                        </p>
+                    </div>
+
+                    <button onclick="goToCalendar()" class="btn-love text-sm px-5 py-2">Back to Calendar 💕</button>
+                </div>
+
+                <!-- RIGHT SIDE: Game -->
+                <div class="day-right">
+                    <div class="day-game-section">
+                        <h3 class="game-title">🌹 Catch the Rose Petals!</h3>
+                        <p class="font-quicksand text-xs text-gray-600 mb-2 text-center">Click falling petals to collect
+                            them. Get 20 to win!</p>
+                        <div class="petal-game flex-grow" id="petal-game" style="height: 250px;">
+                            <div class="score-display">Score: <span id="petal-score">0</span>/20</div>
+                        </div>
+                        <div class="flex justify-center gap-2 mt-3">
+                            <button class="game-btn" onclick="startPetalGame()">Start</button>
+                            <button class="game-btn reset-btn" onclick="resetPetalGame()">Reset</button>
+                        </div>
+                        <div id="petal-message" class="font-pacifico text-love-red text-sm mt-2 text-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROPOSE DAY -->
+    <div class="page" id="page-propose">
+        <div class="day-card p-6 md:p-8 mx-auto relative">
+            <div
+                class="absolute -top-5 left-1/2 -translate-x-1/2 bg-love-red text-white px-6 py-2 rounded-full font-pacifico text-sm md:text-base shadow-lg z-20">
+                💍 Feb 8 - Propose Day</div>
+
+            <div class="day-content mt-6">
+                <div class="day-left">
+                    <h2 class="font-great-vibes text-3xl md:text-4xl text-love-dark mb-4">Propose Day</h2>
+
+                    <div class="gif-container w-36 h-36 md:w-44 md:h-44 mx-auto mb-4">
+                        <img src="Valentine%20Day%20Images/Propose%20Day.gif" alt="Propose Day"
+                            onerror="this.style.display='none'">
+                    </div>
+
+                    <div class="love-letter mb-4" style="margin-top: 25px; padding: 50px 20px 20px 20px;">
+                        <h3 class="font-pacifico text-lg text-love-red mb-2">My Love,</h3>
+                        <p class="font-quicksand text-sm text-gray-700 leading-relaxed">
+                            I don't need a special day to tell you this, but today feels perfect. I want to spend every
+                            moment of my life with you. Will you be mine forever? Happy Propose Day! 💍💕
+                        </p>
+                    </div>
+
+                    <button onclick="goToCalendar()" class="btn-love text-sm px-5 py-2">Back to Calendar 💕</button>
+                </div>
+
+                <div class="day-right">
+                    <div class="day-game-section">
+                        <h3 class="game-title">💍 Catch the Rings!</h3>
+                        <p class="font-quicksand text-xs text-gray-600 mb-2 text-center">Move basket to catch rings. Get
+                            10 to propose!</p>
+                        <div class="ring-game flex-grow" id="ring-game" style="height: 250px;">
+                            <div class="score-display">Rings: <span id="ring-score">0</span>/10</div>
+                            <div class="basket" id="basket"></div>
+                        </div>
+                        <div class="flex justify-center gap-2 mt-3">
+                            <button class="game-btn" onclick="startRingGame()">Start</button>
+                            <button class="game-btn reset-btn" onclick="resetRingGame()">Reset</button>
+                        </div>
+                        <div id="ring-message" class="font-pacifico text-love-red text-sm mt-2 text-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHOCOLATE DAY -->
+    <div class="page" id="page-chocolate">
+        <div class="day-card p-6 md:p-8 mx-auto relative">
+            <div
+                class="absolute -top-5 left-1/2 -translate-x-1/2 bg-choco-brown text-white px-6 py-2 rounded-full font-pacifico text-sm md:text-base shadow-lg z-20">
+                🍫 Feb 9 - Chocolate Day</div>
+
+            <div class="day-content mt-6">
+                <div class="day-left">
+                    <h2 class="font-great-vibes text-3xl md:text-4xl text-love-dark mb-4">Chocolate Day</h2>
+
+                    <div class="gif-container w-36 h-36 md:w-44 md:h-44 mx-auto mb-4">
+                        <img src="Valentine%20Day%20Images/Chocolate%20Day.png" alt="Chocolate Day"
+                            onerror="this.style.display='none'">
+                    </div>
+
+                    <div class="love-letter mb-4" style="margin-top: 25px; padding: 50px 20px 20px 20px;">
+                        <h3 class="font-pacifico text-lg text-choco-brown mb-2">Aazhalagiii,</h3>
+                        <p class="font-quicksand text-sm text-gray-700 leading-relaxed">
+                            You're sweeter than any chocolate in the world! Life with you is like a box of chocolates -
+                            full of sweet surprises. Sending you virtual chocolates and lots of love! Happy Chocolate
+                            Day! 🍫💕
+                        </p>
+                    </div>
+
+                    <button onclick="goToCalendar()" class="btn-love text-sm px-5 py-2">Back to Calendar 💕</button>
+                </div>
+
+                <div class="day-right">
+                    <div class="day-game-section">
+                        <h3 class="game-title">🍫 Match the Chocolates!</h3>
+                        <p class="font-quicksand text-xs text-gray-600 mb-2 text-center">Find matching pairs. Matches:
+                            <span id="match-score">0</span>/4</p>
+                        <div class="memory-game mx-auto" id="memory-game" style="max-width: 200px;"></div>
+                        <div class="flex justify-center gap-2 mt-3">
+                            <button class="game-btn" onclick="initMemoryGame()">New Game</button>
+                            <button class="game-btn reset-btn" onclick="initMemoryGame()">Reset</button>
+                        </div>
+                        <div id="memory-message" class="font-pacifico text-love-red text-sm mt-2 text-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEDDY DAY -->
+    <div class="page" id="page-teddy">
+        <div class="day-card p-6 md:p-8 mx-auto relative">
+            <div
+                class="absolute -top-5 left-1/2 -translate-x-1/2 bg-love-rose text-white px-6 py-2 rounded-full font-pacifico text-sm md:text-base shadow-lg z-20">
+                🧸 Feb 10 - Teddy Day</div>
+
+            <div class="day-content mt-6">
+                <div class="day-left">
+                    <h2 class="font-great-vibes text-3xl md:text-4xl text-love-dark mb-4">Teddy Day</h2>
+
+                    <div class="gif-container w-36 h-36 md:w-44 md:h-44 mx-auto mb-4">
+                        <img src="Valentine%20Day%20Images/Teddy%20Day.png" alt="Teddy Day"
+                            onerror="this.style.display='none'">
+                    </div>
+
+                    <div class="love-letter mb-4" style="margin-top: 25px; padding: 50px 20px 20px 20px;">
+                        <h3 class="font-pacifico text-lg text-love-red mb-2">My Cuddly Bear,</h3>
+                        <p class="font-quicksand text-sm text-gray-700 leading-relaxed">
+                            Sending you this teddy to keep you company when I'm not around. Hug it tight and know that
+                            I'm hugging you in my thoughts. You're my favorite teddy bear! Happy Teddy Day! 🧸💕
+                        </p>
+                    </div>
+
+                    <button onclick="goToCalendar()" class="btn-love text-sm px-5 py-2">Back to Calendar 💕</button>
+                </div>
+
+                <div class="day-right">
+                    <div class="day-game-section">
+                        <h3 class="game-title">🧸 Dress Up the Teddy!</h3>
+                        <p class="font-quicksand text-xs text-gray-600 mb-2 text-center">Click accessories to dress up
+                            your teddy!</p>
+                        <div class="teddy-display mx-auto" id="teddy-display" style="width: 150px; height: 150px;">
+                            <span class="teddy-base" style="font-size: 80px;">🧸</span>
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-1 mt-3">
+                            <button class="accessory-btn" id="btn-bow" onclick="toggleAccessory('bow')">🎀 Bow</button>
+                            <button class="accessory-btn" id="btn-hat" onclick="toggleAccessory('hat')">🎩 Hat</button>
+                            <button class="accessory-btn" id="btn-heart" onclick="toggleAccessory('heart')">💖
+                                Heart</button>
+                            <button class="accessory-btn" id="btn-flower" onclick="toggleAccessory('flower')">🌸
+                                Flower</button>
+                            <button class="accessory-btn reset-btn" onclick="resetTeddy()">🔄 Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMISE DAY -->
+    <div class="page" id="page-promise">
+        <div class="day-card p-6 md:p-8 mx-auto relative">
+            <div
+                class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-500 text-white px-6 py-2 rounded-full font-pacifico text-sm md:text-base shadow-lg z-20">
+                🤝 Feb 11 - Promise Day</div>
+
+            <div class="day-content mt-6">
+                <div class="day-left">
+                    <h2 class="font-great-vibes text-3xl md:text-4xl text-love-dark mb-4">Promise Day</h2>
+
+                    <div class="gif-container w-36 h-36 md:w-44 md:h-44 mx-auto mb-4">
+                        <img src="Valentine%20Day%20Images/Promise%20Day.gif" alt="Promise Day"
+                            onerror="this.style.display='none'">
+                    </div>
+
+                    <div class="love-letter mb-4" style="margin-top: 25px; padding: 50px 20px 20px 20px;">
+                        <h3 class="font-pacifico text-lg text-blue-600 mb-2">My Promise to You,</h3>
+                        <p class="font-quicksand text-sm text-gray-700 leading-relaxed">
+                            I promise to always stand by you, to make you smile when you're sad, to hold your hand
+                            through every storm, and to love you more each day. This is my promise to you - today and
+                            forever. Happy Promise Day! 🤝💕
+                        </p>
+                    </div>
+
+                    <button onclick="goToCalendar()" class="btn-love text-sm px-5 py-2">Back to Calendar 💕</button>
+                </div>
+
+                <div class="day-right">
+                    <div class="day-game-section">
+                        <h3 class="game-title">💝 Promise Wheel</h3>
+                        <p class="font-quicksand text-xs text-gray-600 mb-2 text-center">Spin the wheel to get a
+                            romantic promise!</p>
+                        <div class="wheel-wrapper mx-auto" style="width: 200px; height: 200px;">
+                            <div class="wheel-pointer">🔽</div>
+                            <div class="wheel-container">
+                                <div class="wheel" id="promise-wheel">
+                                    <div class="wheel-segment"
+                                        style="background: linear-gradient(135deg, #ff6b9d, #e91e63); transform: rotate(0deg) skewY(45deg);">
+                                        <span>💕</span></div>
+                                    <div class="wheel-segment"
+                                        style="background: linear-gradient(135deg, #e91e63, #c2185b); transform: rotate(45deg) skewY(45deg);">
+                                        <span>💖</span></div>
+                                    <div class="wheel-segment"
+                                        style="background: linear-gradient(135deg, #f48fb1, #e91e63); transform: rotate(90deg) skewY(45deg);">
+                                        <span>💝</span></div>
+                                    <div class="wheel-segment"
+                                        style="background: linear-gradient(135deg, #ed7ea6, #ff6b9d); transform: rotate(135deg) skewY(45deg);">
+                                        <span>💗</span></div>
+                                    <div class="wheel-segment"
+                                        style="background: linear-gradient(135deg, #ff6b9d, #e91e63); transform: rotate(180deg) skewY(45deg);">
+                                        <span>💕</span></div>
+                                    <div class="wheel-segment"
+                                        style="background: linear-gradient(135deg, #e91e63, #c2185b); transform: rotate(225deg) skewY(45deg);">
+                                        <span>💖</span></div>
+                                    <div class="wheel-segment"
+                                        style="background: linear-gradient(135deg, #f48fb1, #e91e63); transform: rotate(270deg) skewY(45deg);">
+                                        <span>💝</span></div>
+                                    <div class="wheel-segment"
+                                        style="background: linear-gradient(135deg, #ed7ea6, #ff6b9d); transform: rotate(315deg) skewY(45deg);">
+                                        <span>💗</span></div>
+                                </div>
+                                <div class="wheel-center"></div>
+                            </div>
+                        </div>
+                        <div class="flex justify-center gap-2 mt-3">
+                            <button class="game-btn" onclick="spinPromiseWheel()">Spin!</button>
+                            <button class="game-btn reset-btn" onclick="resetPromiseWheel()">Reset</button>
+                        </div>
+                        <div class="promise-text" id="promise-result" style="font-size: 0.85rem; min-height: 50px;">
+                            Click "Spin" for a promise...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HUG DAY -->
+    <div class="page" id="page-hug">
+        <div class="day-card p-6 md:p-8 mx-auto relative">
+            <div
+                class="absolute -top-5 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-6 py-2 rounded-full font-pacifico text-sm md:text-base shadow-lg z-20">
+                🤗 Feb 12 - Hug Day</div>
+
+            <div class="day-content mt-6">
+                <div class="day-left">
+                    <h2 class="font-great-vibes text-3xl md:text-4xl text-love-dark mb-4">Hug Day</h2>
+
+                    <div class="gif-container w-36 h-36 md:w-44 md:h-44 mx-auto mb-4">
+                        <img src="Valentine%20Day%20Images/Hug%20Day.gif" alt="Hug Day"
+                            onerror="this.style.display='none'">
+                    </div>
+
+                    <div class="love-letter mb-4" style="margin-top: 25px; padding: 50px 20px 20px 20px;">
+                        <h3 class="font-pacifico text-lg text-orange-600 mb-2">Sending You a Big Hug,</h3>
+                        <p class="font-quicksand text-sm text-gray-700 leading-relaxed">
+                            A hug is the best way to say "I love you" without words. Here's a virtual hug that comes
+                            straight from my heart to yours. Feel the warmth and know that I'm always here for you.
+                            Happy Hug Day! 🤗💕
+                        </p>
+                    </div>
+
+                    <button onclick="goToCalendar()" class="btn-love text-sm px-5 py-2">Back to Calendar 💕</button>
+                </div>
+
+                <div class="day-right">
+                    <div class="day-game-section">
+                        <h3 class="game-title">🤗 Love Collector!</h3>
+                        <p class="font-quicksand text-xs text-gray-600 mb-2 text-center">Move bear to collect hearts!
+                            Avoid bombs! Score: <span id="collector-score">0</span></p>
+                        <div class="collector-game flex-grow" id="collector-game" style="height: 200px;">
+                            <div class="score-display">❤️ <span id="collector-display">0</span></div>
+                            <div class="player-bear" id="player-bear" style="font-size: 35px;">🧸</div>
+                        </div>
+                        <div class="flex justify-center gap-2 mt-3">
+                            <button class="game-btn" onclick="startCollectorGame()">Start</button>
+                            <button class="game-btn reset-btn" onclick="resetCollectorGame()">Reset</button>
+                        </div>
+                        <div id="collector-message" class="font-pacifico text-love-red text-sm mt-2 text-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KISS DAY -->
+    <div class="page" id="page-kiss">
+        <div class="day-card p-6 md:p-8 mx-auto relative">
+            <div
+                class="absolute -top-5 left-1/2 -translate-x-1/2 bg-pink-600 text-white px-6 py-2 rounded-full font-pacifico text-sm md:text-base shadow-lg z-20">
+                💋 Feb 13 - Kiss Day</div>
+
+            <div class="day-content mt-6">
+                <div class="day-left">
+                    <h2 class="font-great-vibes text-3xl md:text-4xl text-love-dark mb-4">Kiss Day</h2>
+
+                    <div class="gif-container w-36 h-36 md:w-44 md:h-44 mx-auto mb-4">
+                        <img src="Valentine%20Day%20Images/Kiss%20day%201.gif" alt="Kiss Day"
+                            onerror="this.style.display='none'">
+                    </div>
+
+                    <div class="love-letter mb-4" style="margin-top: 25px; padding: 50px 20px 20px 20px;">
+                        <h3 class="font-pacifico text-lg text-pink-600 mb-2">My Love,</h3>
+                        <p class="font-quicksand text-sm text-gray-700 leading-relaxed">
+                            A kiss is a lovely trick designed by nature to stop speech when words become superfluous.
+                            Sending you a million kisses wrapped in love. Happy Kiss Day my darling! 💋💕
+                        </p>
+                    </div>
+
+                    <button onclick="goToCalendar()" class="btn-love text-sm px-5 py-2">Back to Calendar 💕</button>
+                </div>
+
+                <div class="day-right">
+                    <div class="day-game-section">
+                        <h3 class="game-title">💋 Kiss the Frog!</h3>
+                        <p class="font-quicksand text-xs text-gray-600 mb-2 text-center">Find the prince! Attempts:
+                            <span id="frog-attempts">0</span></p>
+                        <div class="frog-pond mx-auto" id="frog-pond" style="max-width: 220px;"></div>
+                        <div class="flex justify-center gap-2 mt-3">
+                            <button class="game-btn" onclick="initFrogGame()">New Game</button>
+                            <button class="game-btn reset-btn" onclick="initFrogGame()">Reset</button>
+                        </div>
+                        <div id="frog-message" class="font-pacifico text-love-red text-sm mt-2 text-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VALENTINE'S DAY -->
+    <div class="page" id="page-valentine">
+        <div class="glass-card p-6 md:p-8 mx-auto relative" style="max-width: 900px;">
+            <div
+                class="absolute -top-5 left-1/2 -translate-x-1/2 bg-red-600 text-white px-6 py-2 rounded-full font-pacifico text-lg md:text-xl shadow-lg animate-pulse z-20">
+                💕 Feb 14 - Valentine's Day</div>
+
+            <div class="day-content mt-6">
+                <div class="day-left">
+                    <h2 class="font-great-vibes text-3xl md:text-4xl text-red-600 mb-4">Happy Valentine's Day!</h2>
+
+                    <div class="gif-container w-36 h-36 md:w-44 md:h-44 mx-auto mb-4">
+                        <img src="Valentine%20Day%20Images/Valentine%20Day.png" alt="Valentine's Day"
+                            onerror="this.style.display='none'">
+                    </div>
+
+                    <div class="love-letter mb-4"
+                        style="margin-top: 25px; padding: 50px 20px 20px 20px; background: linear-gradient(135deg, #ffe4e6 0%, #fff8f1 100%);">
+                        <h3 class="font-pacifico text-lg text-red-600 mb-2">En Thangooo,</h3>
+                        <p class="font-quicksand text-sm text-gray-700 leading-relaxed font-semibold">
+                            After 7 beautiful days of expressing my love, today I want to say - you are the best thing
+                            that ever happened to me. Every moment with you is a blessing I cherish.<br><br>
+                            <span class="font-great-vibes text-xl text-red-600">I Love You Forever! ❤️💕</span>
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button onclick="goToCalendar()" class="btn-love text-sm px-4 py-2">View All Days 💕</button>
+                        <button onclick="createConfetti()" class="btn-love text-sm px-4 py-2"
+                            style="background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);">Celebrate!
+                            🎉</button>
+                    </div>
+                </div>
+
+                <div class="day-right">
+                    <div class="day-game-section">
+                        <h3 class="game-title">🎁 Open Your Gifts!</h3>
+                        <p class="font-quicksand text-xs text-gray-600 mb-2 text-center">Click the gift boxes to reveal
+                            surprises!</p>
+                        <div class="gift-grid mx-auto" id="gift-grid" style="max-width: 250px;"></div>
+                        <div class="flex justify-center gap-2 mt-3">
+                            <button class="game-btn" onclick="initGiftBoxes()">Reset Gifts</button>
+                        </div>
+                        <div class="gift-message" id="gift-message" style="font-size: 0.85rem; padding: 10px;">Open all
+                            6 gifts to see your surprises! 💝</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════
+        // CONFIGURATION
+        // ═══════════════════════════════════════════════════════════════════════
+
+        const TEST_MODE = true;
+
+        const VALENTINE_WEEK = [
+            { id: 'rose', date: '2026-02-07', name: 'Rose Day', icon: '🌹' },
+            { id: 'propose', date: '2026-02-08', name: 'Propose Day', icon: '💍' },
+            { id: 'chocolate', date: '2026-02-09', name: 'Chocolate Day', icon: '🍫' },
+            { id: 'teddy', date: '2026-02-10', name: 'Teddy Day', icon: '🧸' },
+            { id: 'promise', date: '2026-02-11', name: 'Promise Day', icon: '🤝' },
+            { id: 'hug', date: '2026-02-12', name: 'Hug Day', icon: '🤗' },
+            { id: 'kiss', date: '2026-02-13', name: 'Kiss Day', icon: '💋' },
+            { id: 'valentine', date: '2026-02-14', name: "Valentine's Day", icon: '💕' }
+        ];
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // NAVIGATION
+        // ═══════════════════════════════════════════════════════════════════════
+
+        function goToPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('page-' + pageId)?.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function goToCalendar() {
+            generateCalendar();
+            goToPage('calendar');
+        }
+
+        function goToDayPage(dayId) {
+            const day = VALENTINE_WEEK.find(d => d.id === dayId);
+            if (!day) return;
+
+            if (!TEST_MODE && new Date() < new Date(day.date)) {
+                alert(`🔒 ${day.name} is locked!\n\nCome back on ${day.date} to unlock this special surprise! 💕`);
+                return;
+            }
+
+            goToPage(dayId);
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // CALENDAR
+        // ═══════════════════════════════════════════════════════════════════════
+
+        function generateCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            VALENTINE_WEEK.forEach(day => {
+                const unlocked = TEST_MODE || new Date() >= new Date(day.date);
+                const isToday = new Date().toDateString() === new Date(day.date).toDateString();
+
+                // Format date nicely (e.g., "Feb 7" instead of "2026-02-07")
+                const dateObj = new Date(day.date);
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const formattedDate = `${monthNames[dateObj.getMonth()]} ${dateObj.getDate()}`;
+
+                const item = document.createElement('div');
+                item.className = `calendar-day ${unlocked ? 'unlocked' : 'locked'} ${isToday ? 'active' : ''}`;
+                item.innerHTML = `
+                    ${isToday ? '<div class="text-xs text-red-500 font-bold mb-1">✨ TODAY!</div>' : ''}
+                    ${!unlocked ? '<div class="text-2xl mb-1">🔒</div>' : ''}
+                    <div class="day-icon">${day.icon}</div>
+                    <div class="day-name">${day.name}</div>
+                    <div class="day-date">${formattedDate}</div>
+                `;
+
+                if (unlocked) item.onclick = () => goToDayPage(day.id);
+                grid.appendChild(item);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // COUNTDOWN
+        // ═══════════════════════════════════════════════════════════════════════
+
+        function updateCountdown() {
+            const target = new Date('2026-02-07T00:00:00');
+            const now = new Date();
+            const diff = target - now;
+
+            if (diff <= 0) {
+                const el = document.getElementById('countdown-section');
+                if (el) el.innerHTML = '<p class="font-quicksand text-xl text-love-red font-bold animate-pulse">🎉 Valentine\'s Week Started! 🎉</p>';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('countdown-minutes').textContent = String(mins).padStart(2, '0');
+            document.getElementById('countdown-seconds').textContent = String(secs).padStart(2, '0');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // EFFECTS
+        // ═══════════════════════════════════════════════════════════════════════
+
+        function createFloatingElements() {
+            const container = document.getElementById('floating-container');
+            if (!container) return;
+            const emojis = ['💕', '💖', '💗', '💝', '💘', '🌹', '🧸', '🍫', '💍', '🤗', '💋'];
+
+            setInterval(() => {
+                const item = document.createElement('div');
+                item.className = 'float-item';
+                item.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                item.style.left = Math.random() * 100 + '%';
+                item.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                item.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                container.appendChild(item);
+                setTimeout(() => item.remove(), 25000);
+            }, 2000);
+        }
+
+        function createConfetti() {
+            const colors = ['#ed7ea6', '#ff6b9d', '#e91e63', '#f48fb1', '#f8bbd9', '#fff8f1'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: fixed;
+                    left: ${Math.random() * 100}%;
+                    top: -10px;
+                    width: ${Math.random() * 10 + 5}px;
+                    height: ${Math.random() * 10 + 5}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                    z-index: 1000;
+                    animation: float-around ${Math.random() * 3 + 3}s linear forwards;
+                `;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 6000);
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // MINI GAMES
+        // ═══════════════════════════════════════════════════════════════════════
+
+        // 🌹 ROSE DAY - Petal Shower Game
+        let petalGameActive = false;
+        let petalScore = 0;
+        let petalInterval;
+
+        function startPetalGame() {
+            if (petalGameActive) return;
+            petalGameActive = true;
+            petalScore = 0;
+            document.getElementById('petal-score').textContent = '0';
+            document.getElementById('petal-message').textContent = '';
+
+            const game = document.getElementById('petal-game');
+            game.querySelectorAll('.petal').forEach(p => p.remove());
+
+            petalInterval = setInterval(() => {
+                if (!petalGameActive) return;
+                createPetal();
+            }, 600);
+        }
+
+        function resetPetalGame() {
+            stopPetalGame();
+            petalScore = 0;
+            document.getElementById('petal-score').textContent = '0';
+            document.getElementById('petal-message').textContent = '';
+            document.getElementById('petal-game').querySelectorAll('.petal').forEach(p => p.remove());
+        }
+
+        function createPetal() {
+            const game = document.getElementById('petal-game');
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.textContent = ['🌹', '🌸', '🌺', '🌷'][Math.floor(Math.random() * 4)];
+            petal.style.left = Math.random() * 90 + '%';
+            petal.style.animationDuration = (Math.random() * 2 + 2) + 's';
+
+            petal.onclick = () => {
+                petalScore++;
+                document.getElementById('petal-score').textContent = petalScore;
+                petal.remove();
+
+                if (petalScore >= 20) {
+                    stopPetalGame();
+                    document.getElementById('petal-message').textContent = '🎉 You collected all petals! I love you! 💕';
+                    createConfetti();
+                }
+            };
+
+            game.appendChild(petal);
+            setTimeout(() => petal.remove(), 4000);
+        }
+
+        function stopPetalGame() {
+            petalGameActive = false;
+            clearInterval(petalInterval);
+        }
+
+        // 💍 PROPOSE DAY - Ring Catch Game (REDESIGNED)
+        let ringGameActive = false;
+        let ringScore = 0;
+        let ringInterval;
+        let basketX = 50;
+
+        function startRingGame() {
+            if (ringGameActive) return;
+            ringGameActive = true;
+            ringScore = 0;
+            document.getElementById('ring-score').textContent = '0';
+            document.getElementById('ring-message').textContent = '';
+
+            const game = document.getElementById('ring-game');
+            const basket = document.getElementById('basket');
+            basketX = game.offsetWidth / 2 - 35;
+            basket.style.left = basketX + 'px';
+
+            game.onmousemove = (e) => {
+                const rect = game.getBoundingClientRect();
+                basketX = e.clientX - rect.left - 35;
+                basketX = Math.max(0, Math.min(basketX, rect.width - 70));
+                basket.style.left = basketX + 'px';
+            };
+
+            game.ontouchmove = (e) => {
+                e.preventDefault();
+                const rect = game.getBoundingClientRect();
+                basketX = e.touches[0].clientX - rect.left - 35;
+                basketX = Math.max(0, Math.min(basketX, rect.width - 70));
+                basket.style.left = basketX + 'px';
+            };
+
+            ringInterval = setInterval(() => {
+                if (!ringGameActive) return;
+                createRing();
+            }, 1000);
+        }
+
+        function resetRingGame() {
+            stopRingGame();
+            ringScore = 0;
+            document.getElementById('ring-score').textContent = '0';
+            document.getElementById('ring-message').textContent = '';
+            document.getElementById('ring-game').querySelectorAll('.falling-ring').forEach(r => r.remove());
+        }
+
+        function createRing() {
+            const game = document.getElementById('ring-game');
+            const ring = document.createElement('div');
+            ring.className = 'falling-ring';
+            ring.textContent = '💍';
+            ring.style.left = Math.random() * 70 + '%';
+            game.appendChild(ring);
+
+            let pos = -40;
+            const fallInterval = setInterval(() => {
+                if (!ringGameActive) { clearInterval(fallInterval); return; }
+                pos += 3;
+                ring.style.top = pos + 'px';
+
+                const ringRect = ring.getBoundingClientRect();
+                const basketRect = document.getElementById('basket').getBoundingClientRect();
+
+                if (pos > 140 &&
+                    ringRect.left < basketRect.right &&
+                    ringRect.right > basketRect.left) {
+                    ringScore++;
+                    document.getElementById('ring-score').textContent = ringScore;
+                    ring.remove();
+                    clearInterval(fallInterval);
+
+                    if (ringScore >= 10) {
+                        stopRingGame();
+                        document.getElementById('ring-message').textContent = '💍 Will you marry me? I love you! 💕';
+                        createConfetti();
+                    }
+                }
+
+                if (pos > 180) {
+                    ring.remove();
+                    clearInterval(fallInterval);
+                }
+            }, 30);
+        }
+
+        function stopRingGame() {
+            ringGameActive = false;
+            clearInterval(ringInterval);
+        }
+
+        // 🍫 CHOCOLATE DAY - Memory Match Game
+        const chocolates = ['🍫', '🍬', '🍪', '🧁'];
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let canFlip = true;
+
+        function initMemoryGame() {
+            const game = document.getElementById('memory-game');
+            game.innerHTML = '';
+            matchedPairs = 0;
+            document.getElementById('match-score').textContent = '0';
+            document.getElementById('memory-message').textContent = '';
+            flippedCards = [];
+            canFlip = true;
+
+            const pairs = [...chocolates, ...chocolates];
+            const shuffled = pairs.sort(() => Math.random() - 0.5);
+
+            shuffled.forEach((chocolate, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.chocolate = chocolate;
+                card.textContent = '🎁';
+                card.onclick = () => flipCard(card);
+                game.appendChild(card);
+            });
+        }
+
+        function flipCard(card) {
+            if (!canFlip || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+            card.classList.add('flipped');
+            card.textContent = card.dataset.chocolate;
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                canFlip = false;
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+
+            if (card1.dataset.chocolate === card2.dataset.chocolate) {
+                setTimeout(() => {
+                    card1.classList.add('matched');
+                    card2.classList.add('matched');
+                    matchedPairs++;
+                    document.getElementById('match-score').textContent = matchedPairs;
+                    flippedCards = [];
+                    canFlip = true;
+
+                    if (matchedPairs === 4) {
+                        document.getElementById('memory-message').textContent = '🎉 Sweet victory! You matched all! 💕';
+                        createConfetti();
+                    }
+                }, 500);
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    card1.textContent = '🎁';
+                    card2.textContent = '🎁';
+                    flippedCards = [];
+                    canFlip = true;
+                }, 1000);
+            }
+        }
+
+        // 🧸 TEDDY DAY - Dress Up Game (FIXED)
+        const teddyAccessories = { bow: false, hat: false, heart: false, flower: false };
+
+        function toggleAccessory(type) {
+            teddyAccessories[type] = !teddyAccessories[type];
+            document.getElementById('btn-' + type).classList.toggle('active', teddyAccessories[type]);
+            updateTeddyDisplay();
+        }
+
+        function updateTeddyDisplay() {
+            const display = document.getElementById('teddy-display');
+            const isMobile = window.innerWidth <= 768;
+            const bearSize = isMobile ? '60px' : '80px';
+            let html = `<span class="teddy-base" style="font-size: ${bearSize};">🧸</span>`;
+
+            if (teddyAccessories.hat) html += '<span class="teddy-hat">🎩</span>';
+            if (teddyAccessories.bow) html += '<span class="teddy-bow">🎀</span>';
+            if (teddyAccessories.heart) html += '<span class="teddy-heart">💖</span>';
+            if (teddyAccessories.flower) html += '<span class="teddy-bow" style="left: 20px;">🌸</span>';
+
+            display.innerHTML = html;
+        }
+
+        function resetTeddy() {
+            Object.keys(teddyAccessories).forEach(key => {
+                teddyAccessories[key] = false;
+                document.getElementById('btn-' + key)?.classList.remove('active');
+            });
+            updateTeddyDisplay();
+        }
+
+        // 🤝 PROMISE DAY - Spin Wheel (FIXED)
+        const promises = [
+            '💕 I promise to always love you more each day',
+            '🤗 I promise to give you warm hugs whenever you need',
+            '💍 I promise to stand by you through every storm',
+            '😊 I promise to make you smile every single day',
+            '⭐ I promise to support all your dreams',
+            '🤝 I promise to be your best friend forever',
+            '💋 I promise to cherish every moment with you',
+            '❤️ I promise you are my one and only'
+        ];
+
+        function spinPromiseWheel() {
+            const wheel = document.getElementById('promise-wheel');
+            const result = document.getElementById('promise-result');
+            if (!wheel || !result) return;
+
+            // Calculate rotation: 5-8 full spins plus random segment
+            const spins = 5 + Math.floor(Math.random() * 3);
+            const randomOffset = Math.floor(Math.random() * 360);
+            const degrees = spins * 360 + randomOffset;
+
+            wheel.style.transform = `rotate(${degrees}deg)`;
+            result.textContent = 'Spinning... ✨';
+
+            setTimeout(() => {
+                // Calculate which segment the pointer is pointing to
+                // The pointer is at top (0 degrees), but wheel rotated clockwise
+                // Each segment is 45 degrees (360/8)
+                const normalizedDeg = (360 - (degrees % 360)) % 360;
+                const index = Math.floor(normalizedDeg / 45) % 8;
+                result.textContent = promises[index];
+            }, 3000);
+        }
+
+        function resetPromiseWheel() {
+            document.getElementById('promise-wheel').style.transform = 'rotate(0deg)';
+            document.getElementById('promise-result').textContent = 'Click "Spin" for a promise...';
+        }
+
+        // 🤗 HUG DAY - Love Collector Game (NEW)
+        let collectorGameActive = false;
+        let collectorScore = 0;
+        let collectorInterval;
+        let playerX = 50;
+
+        function startCollectorGame() {
+            if (collectorGameActive) return;
+            collectorGameActive = true;
+            collectorScore = 0;
+            document.getElementById('collector-score').textContent = '0';
+            document.getElementById('collector-display').textContent = '0';
+            document.getElementById('collector-message').textContent = '';
+
+            const game = document.getElementById('collector-game');
+            const bear = document.getElementById('player-bear');
+            playerX = game.offsetWidth / 2 - 20;
+            bear.style.left = playerX + 'px';
+
+            game.querySelectorAll('.falling-item').forEach(i => i.remove());
+
+            game.onmousemove = (e) => {
+                const rect = game.getBoundingClientRect();
+                playerX = e.clientX - rect.left - 20;
+                playerX = Math.max(0, Math.min(playerX, rect.width - 40));
+                bear.style.left = playerX + 'px';
+            };
+
+            game.ontouchmove = (e) => {
+                e.preventDefault();
+                const rect = game.getBoundingClientRect();
+                playerX = e.touches[0].clientX - rect.left - 20;
+                playerX = Math.max(0, Math.min(playerX, rect.width - 40));
+                bear.style.left = playerX + 'px';
+            };
+
+            collectorInterval = setInterval(() => {
+                if (!collectorGameActive) return;
+                createFallingItem();
+            }, 800);
+        }
+
+        function resetCollectorGame() {
+            stopCollectorGame();
+            collectorScore = 0;
+            document.getElementById('collector-score').textContent = '0';
+            document.getElementById('collector-display').textContent = '0';
+            document.getElementById('collector-message').textContent = '';
+            document.getElementById('collector-game').querySelectorAll('.falling-item').forEach(i => i.remove());
+        }
+
+        function createFallingItem() {
+            const game = document.getElementById('collector-game');
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            const isHeart = Math.random() > 0.3;
+            item.textContent = isHeart ? '❤️' : '💣';
+            item.dataset.type = isHeart ? 'heart' : 'bomb';
+            item.style.left = Math.random() * 80 + '%';
+            game.appendChild(item);
+
+            let pos = -40;
+            const fallInterval = setInterval(() => {
+                if (!collectorGameActive) { clearInterval(fallInterval); return; }
+                pos += 2;
+                item.style.top = pos + 'px';
+
+                const itemRect = item.getBoundingClientRect();
+                const bearRect = document.getElementById('player-bear').getBoundingClientRect();
+
+                if (pos > 130 &&
+                    itemRect.left < bearRect.right &&
+                    itemRect.right > bearRect.left) {
+
+                    if (item.dataset.type === 'heart') {
+                        collectorScore++;
+                        document.getElementById('collector-score').textContent = collectorScore;
+                        document.getElementById('collector-display').textContent = collectorScore;
+                    } else {
+                        collectorScore = Math.max(0, collectorScore - 3);
+                        document.getElementById('collector-score').textContent = collectorScore;
+                        document.getElementById('collector-display').textContent = collectorScore;
+                    }
+
+                    item.remove();
+                    clearInterval(fallInterval);
+
+                    if (collectorScore >= 15) {
+                        stopCollectorGame();
+                        document.getElementById('collector-message').textContent = '🎉 You collected enough love! Big hug! 🤗💕';
+                        createConfetti();
+                    }
+                }
+
+                if (pos > 180) {
+                    item.remove();
+                    clearInterval(fallInterval);
+                }
+            }, 30);
+        }
+
+        function stopCollectorGame() {
+            collectorGameActive = false;
+            clearInterval(collectorInterval);
+        }
+
+        // 💋 KISS DAY - Find the Prince
+        let frogAttempts = 0;
+        let princeIndex;
+
+        function initFrogGame() {
+            const pond = document.getElementById('frog-pond');
+            pond.innerHTML = '';
+            frogAttempts = 0;
+            document.getElementById('frog-attempts').textContent = '0';
+            document.getElementById('frog-message').textContent = '';
+            princeIndex = Math.floor(Math.random() * 9);
+
+            for (let i = 0; i < 9; i++) {
+                const frog = document.createElement('div');
+                frog.className = 'frog';
+                frog.textContent = '🐸';
+                frog.onclick = () => revealFrog(frog, i);
+                pond.appendChild(frog);
+            }
+        }
+
+        function revealFrog(frog, index) {
+            if (frog.classList.contains('revealed')) return;
+
+            frog.classList.add('revealed');
+            frogAttempts++;
+            document.getElementById('frog-attempts').textContent = frogAttempts;
+
+            if (index === princeIndex) {
+                frog.textContent = '🤴';
+                frog.classList.add('prince');
+                document.getElementById('frog-message').textContent = `🎉 You found your prince in ${frogAttempts} tries! True love! 💕`;
+                createConfetti();
+            } else {
+                frog.textContent = '🐸';
+                setTimeout(() => {
+                    frog.classList.remove('revealed');
+                    frog.textContent = '🐸';
+                }, 600);
+            }
+        }
+
+        // 💕 VALENTINE'S DAY - Gift Box Opening
+        const giftSurprises = [
+            { emoji: '💌', message: 'A love letter: "You are my everything!"' },
+            { emoji: '💍', message: 'A promise ring: "Forever and always!"' },
+            { emoji: '🌹', message: 'Eternal roses: "My love never fades!"' },
+            { emoji: '🧸', message: 'A teddy bear: "Hugs whenever you need!"' },
+            { emoji: '🎵', message: 'Our song: "Every beat is for you!"' },
+            { emoji: '✈️', message: 'A trip: "Adventures with you!"' }
+        ];
+
+        function initGiftBoxes() {
+            const grid = document.getElementById('gift-grid');
+            grid.innerHTML = '';
+            document.getElementById('gift-message').textContent = 'Open all 6 gifts to see your surprises! 💝';
+
+            const shuffled = [...giftSurprises].sort(() => Math.random() - 0.5);
+            let opened = 0;
+
+            shuffled.forEach((surprise, index) => {
+                const box = document.createElement('div');
+                box.className = 'gift-box';
+                box.textContent = '🎁';
+                box.onclick = () => {
+                    if (box.classList.contains('opened')) return;
+                    box.classList.add('opened');
+                    box.innerHTML = `<span class="gift-surprise">${surprise.emoji}</span>`;
+                    opened++;
+                    document.getElementById('gift-message').textContent = surprise.message;
+
+                    if (opened === 6) {
+                        setTimeout(() => {
+                            document.getElementById('gift-message').innerHTML = '🎉 All gifts opened! You are my greatest gift! I Love You! ❤️💕';
+                            createConfetti();
+                        }, 500);
+                    }
+                };
+                grid.appendChild(box);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // INIT
+        // ═══════════════════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createFloatingElements();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            initMemoryGame();
+            initFrogGame();
+            initGiftBoxes();
+
+            // Update teddy display on resize
+            window.addEventListener('resize', updateTeddyDisplay);
+        });
+    </script>
+</body>
+
+</html>
