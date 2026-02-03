@@ -1,5 +1,5 @@
 // ===== BTS (Korean Kpop) Theme Background =====
-// Purple aesthetic with BTS logo, lights, and choreography-inspired effects
+// Purple/pink aesthetic with lights and choreography-inspired effects - Pink/Cream Theme
 
 class BTSBackground {
     constructor(canvas, ctx, svg) {
@@ -13,12 +13,13 @@ class BTSBackground {
         this.mousePos = { x: 0, y: 0 };
         this.time = 0;
 
-        // BTS Purple colors
-        this.purples = [
-            { r: 95, g: 39, b: 205 },    // BTS Purple
-            { r: 138, g: 43, b: 226 },   // Blue Violet
-            { r: 147, g: 112, b: 219 },  // Medium Purple
-            { r: 186, g: 85, b: 211 }    // Medium Orchid
+        // Pink/Purple romantic colors
+        this.colors = [
+            { r: 255, g: 105, b: 180 },   // Hot pink
+            { r: 255, g: 133, b: 162 },   // Light pink
+            { r: 186, g: 85, b: 211 },    // Medium orchid
+            { r: 221, g: 160, b: 221 },   // Plum
+            { r: 255, g: 182, b: 193 }    // Light pink
         ];
     }
 
@@ -30,7 +31,7 @@ class BTSBackground {
     }
 
     createStarField() {
-        const starCount = 100;
+        const starCount = 80;
         this.stars = [];
 
         for (let i = 0; i < starCount; i++) {
@@ -54,23 +55,23 @@ class BTSBackground {
                 y: 0,
                 angle: Math.PI / 2,
                 spread: Math.PI / 6,
-                color: this.purples[i % this.purples.length],
-                intensity: 0.6 + Math.random() * 0.4,
+                color: this.colors[i % this.colors.length],
+                intensity: 0.5 + Math.random() * 0.4,
                 pulsePhase: Math.random() * Math.PI * 2
             });
         }
     }
 
     createFloatingParticles() {
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 35; i++) {
             this.particles.push({
                 x: Math.random() * this.canvas.width,
                 y: Math.random() * this.canvas.height,
                 vx: (Math.random() - 0.5) * 0.5,
                 vy: (Math.random() - 0.5) * 0.5,
-                size: Math.random() * 4 + 2,
-                color: this.purples[Math.floor(Math.random() * this.purples.length)],
-                opacity: Math.random() * 0.5 + 0.5
+                size: Math.random() * 5 + 2,
+                color: this.colors[Math.floor(Math.random() * this.colors.length)],
+                opacity: Math.random() * 0.4 + 0.4
             });
         }
     }
@@ -87,7 +88,7 @@ class BTSBackground {
         // Update stage lights
         this.lights.forEach(light => {
             light.pulsePhase += 0.02;
-            light.intensity = 0.5 + Math.sin(light.pulsePhase) * 0.3;
+            light.intensity = 0.4 + Math.sin(light.pulsePhase) * 0.25;
         });
 
         // Update floating particles
@@ -116,22 +117,23 @@ class BTSBackground {
     }
 
     draw() {
-        // Dark purple gradient background
+        // Light cream/pink gradient background
         const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-        gradient.addColorStop(0, '#0d0221');
-        gradient.addColorStop(0.5, '#1a0933');
-        gradient.addColorStop(1, '#2e1f47');
+        gradient.addColorStop(0, '#fff8f1');
+        gradient.addColorStop(0.4, '#ffe4e6');
+        gradient.addColorStop(0.8, '#fff0f3');
+        gradient.addColorStop(1, '#f8e8f8');
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         // Draw star field
         this.stars.forEach(star => {
-            const brightness = 0.3 + Math.sin(star.twinkle) * 0.7;
+            const brightness = 0.4 + Math.sin(star.twinkle) * 0.4;
             this.ctx.save();
             this.ctx.globalAlpha = brightness;
-            this.ctx.fillStyle = '#ffffff';
+            this.ctx.fillStyle = '#ffd700';
             this.ctx.shadowBlur = 4;
-            this.ctx.shadowColor = '#ffffff';
+            this.ctx.shadowColor = 'rgba(255, 105, 180, 0.6)';
             this.ctx.beginPath();
             this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
             this.ctx.fill();
@@ -141,15 +143,15 @@ class BTSBackground {
         // Draw stage lights (spotlight beams)
         this.lights.forEach(light => {
             this.ctx.save();
-            this.ctx.globalAlpha = light.intensity * 0.15;
+            this.ctx.globalAlpha = light.intensity * 0.12;
             this.ctx.globalCompositeOperation = 'screen';
 
             const gradient = this.ctx.createLinearGradient(
                 light.x, light.y,
                 light.x, this.canvas.height
             );
-            gradient.addColorStop(0, `rgba(${light.color.r}, ${light.color.g}, ${light.color.b}, 0.8)`);
-            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(0, `rgba(${light.color.r}, ${light.color.g}, ${light.color.b}, 0.7)`);
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
             this.ctx.fillStyle = gradient;
             this.ctx.beginPath();
@@ -163,111 +165,92 @@ class BTSBackground {
             this.ctx.restore();
         });
 
-        // Draw BTS Logo in center (behind text)
-        this.drawBTSLogo();
+        // Draw heart logo in center (behind text)
+        this.drawHeartLogo();
 
-        // Draw floating purple particles
+        // Draw floating particles
         this.particles.forEach(p => {
             this.ctx.save();
             this.ctx.globalAlpha = p.opacity;
 
             const gradient = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 2);
-            gradient.addColorStop(0, `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, 1)`);
+            gradient.addColorStop(0, `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, 0.9)`);
             gradient.addColorStop(1, `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, 0)`);
 
             this.ctx.fillStyle = gradient;
-            this.ctx.shadowBlur = 10;
-            this.ctx.shadowColor = `rgb(${p.color.r}, ${p.color.g}, ${p.color.b})`;
+            this.ctx.shadowBlur = 8;
+            this.ctx.shadowColor = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, 0.5)`;
             this.ctx.beginPath();
             this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
             this.ctx.fill();
             this.ctx.restore();
         });
 
-        // Draw BTS Army Bomb light sticks (simplified)
-        const bombCount = 8;
-        for (let i = 0; i < bombCount; i++) {
-            const angle = (Math.PI * 2 * i) / bombCount + this.time;
+        // Draw romantic orbiting hearts
+        const heartCount = 8;
+        for (let i = 0; i < heartCount; i++) {
+            const angle = (Math.PI * 2 * i) / heartCount + this.time * 0.3;
             const radius = Math.min(this.canvas.width, this.canvas.height) * 0.35;
             const x = this.canvas.width / 2 + Math.cos(angle) * radius;
             const y = this.canvas.height / 2 + Math.sin(angle) * radius;
 
             this.ctx.save();
-            this.ctx.globalAlpha = 0.6;
-            this.ctx.shadowBlur = 20;
-            this.ctx.shadowColor = '#5f27cd';
-            this.ctx.fillStyle = '#8a2be2';
+            this.ctx.globalAlpha = 0.5;
+            this.ctx.shadowBlur = 15;
+            this.ctx.shadowColor = '#ff69b4';
+            this.ctx.fillStyle = '#ff85a2';
+            
+            const size = 8;
+            this.ctx.translate(x, y);
             this.ctx.beginPath();
-            this.ctx.arc(x, y, 8, 0, Math.PI * 2);
+            this.ctx.moveTo(0, size * 0.3);
+            this.ctx.bezierCurveTo(-size * 0.5, -size * 0.3, -size, size * 0.1, 0, size);
+            this.ctx.bezierCurveTo(size, size * 0.1, size * 0.5, -size * 0.3, 0, size * 0.3);
             this.ctx.fill();
             this.ctx.restore();
         }
     }
 
-    drawBTSLogo() {
+    drawHeartLogo() {
         const centerX = this.canvas.width / 2;
         const centerY = this.canvas.height / 2;
-        const logoSize = Math.min(this.canvas.width, this.canvas.height) * 0.25;
+        const logoSize = Math.min(this.canvas.width, this.canvas.height) * 0.2;
 
         this.ctx.save();
-        this.ctx.globalAlpha = 0.18 + Math.sin(this.time * 0.5) * 0.07;
+        this.ctx.globalAlpha = 0.15 + Math.sin(this.time * 0.5) * 0.05;
         this.ctx.translate(centerX, centerY);
 
-        // BTS Logo gradient
+        // Heart gradient
         const gradient = this.ctx.createLinearGradient(-logoSize, -logoSize, logoSize, logoSize);
-        gradient.addColorStop(0, '#8a2be2');
-        gradient.addColorStop(0.5, '#a855f7');
-        gradient.addColorStop(1, '#c084fc');
+        gradient.addColorStop(0, '#ff69b4');
+        gradient.addColorStop(0.5, '#ff85a2');
+        gradient.addColorStop(1, '#ffc4d6');
 
         this.ctx.fillStyle = gradient;
         this.ctx.shadowBlur = 30;
-        this.ctx.shadowColor = '#8a2be2';
+        this.ctx.shadowColor = 'rgba(255, 105, 180, 0.5)';
 
-        // Draw official BTS Door Logo - tall vertical doors
-        const doorHeight = logoSize * 1.8;
-        const doorTopWidth = logoSize * 0.4;
-        const doorBottomWidth = logoSize * 0.55;
-        const doorGap = logoSize * 0.12;
-
-        // Left door - trapezoid (wider at bottom)
+        // Draw large heart shape
+        const size = logoSize;
         this.ctx.beginPath();
-        this.ctx.moveTo(-doorGap - doorTopWidth, -doorHeight / 2);
-        this.ctx.lineTo(-doorGap, -doorHeight / 2);
-        this.ctx.lineTo(-doorGap, doorHeight / 2);
-        this.ctx.lineTo(-doorGap - doorBottomWidth, doorHeight / 2);
-        this.ctx.closePath();
+        this.ctx.moveTo(0, size * 0.3);
+        this.ctx.bezierCurveTo(-size * 0.5, -size * 0.3, -size, size * 0.1, 0, size);
+        this.ctx.bezierCurveTo(size, size * 0.1, size * 0.5, -size * 0.3, 0, size * 0.3);
         this.ctx.fill();
 
-        // Right door - trapezoid (wider at bottom)
-        this.ctx.beginPath();
-        this.ctx.moveTo(doorGap + doorTopWidth, -doorHeight / 2);
-        this.ctx.lineTo(doorGap, -doorHeight / 2);
-        this.ctx.lineTo(doorGap, doorHeight / 2);
-        this.ctx.lineTo(doorGap + doorBottomWidth, doorHeight / 2);
-        this.ctx.closePath();
-        this.ctx.fill();
-
-        // Draw bold "BTS" text
-        this.ctx.font = `900 ${logoSize * 0.6}px Arial Black, Arial, sans-serif`;
-        this.ctx.textAlign = 'center';
-        this.ctx.textBaseline = 'top';
-
-        const textY = doorHeight / 2 + logoSize * 0.25;
-        this.ctx.shadowBlur = 40;
-        this.ctx.fillText('BTS', 0, textY);
-
-        // Decorative orbiting dots
+        // Decorative orbiting sparkles
         const numDots = 8;
         for (let i = 0; i < numDots; i++) {
             const angle = (Math.PI * 2 * i) / numDots + this.time * 0.3;
-            const radius = logoSize * 1.4;
+            const radius = logoSize * 1.3;
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
 
-            this.ctx.fillStyle = '#c084fc';
-            this.ctx.shadowBlur = 15;
+            this.ctx.fillStyle = '#ffd700';
+            this.ctx.shadowBlur = 10;
+            this.ctx.shadowColor = '#ffd700';
             this.ctx.beginPath();
-            this.ctx.arc(x, y, 5, 0, Math.PI * 2);
+            this.ctx.arc(x, y, 4, 0, Math.PI * 2);
             this.ctx.fill();
         }
 

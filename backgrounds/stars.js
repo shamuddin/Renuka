@@ -1,5 +1,5 @@
 // ===== Starry Night Sky =====
-// Twinkling stars with shooting stars and constellations
+// Twinkling stars with shooting stars and sparkles - Pink/Cream Theme
 
 class StarsBackground {
     constructor(canvas, ctx, svg) {
@@ -19,7 +19,7 @@ class StarsBackground {
     }
 
     createStars() {
-        const starCount = Math.min(200, Math.floor(this.canvas.width * this.canvas.height / 5000));
+        const starCount = Math.min(150, Math.floor(this.canvas.width * this.canvas.height / 6000));
         this.stars = [];
 
         for (let i = 0; i < starCount; i++) {
@@ -29,7 +29,7 @@ class StarsBackground {
                 size: Math.random() * 2.5 + 0.5,
                 twinklePhase: Math.random() * Math.PI * 2,
                 twinkleSpeed: 0.02 + Math.random() * 0.03,
-                brightness: 0.3 + Math.random() * 0.7,
+                brightness: 0.4 + Math.random() * 0.6,
                 color: this.getStarColor()
             });
         }
@@ -37,11 +37,11 @@ class StarsBackground {
 
     getStarColor() {
         const colors = [
-            '#ffffff',
-            '#e6f2ff',
-            '#fff5e6',
-            '#f0e6ff',
-            '#cce6ff'
+            '#ffd700', // Gold
+            '#ffb3c6', // Pink
+            '#ffa8c5', // Rose
+            '#ffc4d6', // Light pink
+            '#fff8dc'  // Cream
         ];
         return colors[Math.floor(Math.random() * colors.length)];
     }
@@ -76,7 +76,7 @@ class StarsBackground {
             if (distance < 150) {
                 star.brightness = Math.min(1, star.brightness + 0.02);
             } else {
-                star.brightness = Math.max(0.3, star.brightness - 0.01);
+                star.brightness = Math.max(0.4, star.brightness - 0.01);
             }
         });
 
@@ -92,22 +92,23 @@ class StarsBackground {
         });
 
         // Randomly create shooting stars
-        if (Math.random() < 0.01) {
+        if (Math.random() < 0.008) {
             this.createShootingStar();
         }
     }
 
     draw() {
-        // Night sky gradient
+        // Light cream/pink gradient background
         const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-        gradient.addColorStop(0, '#0a0a1f');
-        gradient.addColorStop(0.5, '#191970');
-        gradient.addColorStop(1, '#2e1a47');
+        gradient.addColorStop(0, '#fff8f1');
+        gradient.addColorStop(0.4, '#fff0f3');
+        gradient.addColorStop(0.8, '#ffe4e6');
+        gradient.addColorStop(1, '#ffe8e8');
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         // Draw constellation lines near mouse
-        this.ctx.strokeStyle = 'rgba(230, 242, 255, 0.2)';
+        this.ctx.strokeStyle = 'rgba(255, 105, 180, 0.25)';
         this.ctx.lineWidth = 1;
 
         this.stars.forEach((star, i) => {
@@ -129,7 +130,7 @@ class StarsBackground {
 
                             if (dist3 < 100) {
                                 this.ctx.save();
-                                this.ctx.globalAlpha = (1 - Math.max(dist1, dist2) / 120) * 0.3;
+                                this.ctx.globalAlpha = (1 - Math.max(dist1, dist2) / 120) * 0.4;
                                 this.ctx.beginPath();
                                 this.ctx.moveTo(star.x, star.y);
                                 this.ctx.lineTo(otherStar.x, otherStar.y);
@@ -175,13 +176,13 @@ class StarsBackground {
                 star.x, star.y,
                 star.x - star.vx * 5, star.y - star.vy * 5
             );
-            gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            gradient.addColorStop(0, 'rgba(255, 105, 180, 1)');
+            gradient.addColorStop(1, 'rgba(255, 105, 180, 0)');
 
             this.ctx.strokeStyle = gradient;
             this.ctx.lineWidth = 2;
             this.ctx.shadowBlur = 10;
-            this.ctx.shadowColor = '#ffffff';
+            this.ctx.shadowColor = '#ff69b4';
 
             this.ctx.beginPath();
             this.ctx.moveTo(star.x, star.y);
