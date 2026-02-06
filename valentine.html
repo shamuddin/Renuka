@@ -1623,7 +1623,7 @@
             const day = VALENTINE_WEEK.find(d => d.id === dayId);
             if (!day) return;
 
-            if (!TEST_MODE && new Date() < new Date(day.date)) {
+            if (!TEST_MODE && new Date() < new Date(day.date + 'T00:00:00')) {
                 alert(`🔒 ${day.name} is locked!\n\nCome back on ${day.date} to unlock this special surprise! 💕`);
                 return;
             }
@@ -1641,11 +1641,12 @@
             grid.innerHTML = '';
 
             VALENTINE_WEEK.forEach(day => {
-                const unlocked = TEST_MODE || new Date() >= new Date(day.date);
-                const isToday = new Date().toDateString() === new Date(day.date).toDateString();
+                // Append T00:00:00 to parse as local time, not UTC
+                const unlocked = TEST_MODE || new Date() >= new Date(day.date + 'T00:00:00');
+                const isToday = new Date().toDateString() === new Date(day.date + 'T00:00:00').toDateString();
 
                 // Format date nicely (e.g., "Feb 7" instead of "2026-02-07")
-                const dateObj = new Date(day.date);
+                const dateObj = new Date(day.date + 'T00:00:00');
                 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                 const formattedDate = `${monthNames[dateObj.getMonth()]} ${dateObj.getDate()}`;
 
