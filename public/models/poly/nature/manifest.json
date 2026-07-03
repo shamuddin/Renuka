@@ -1,0 +1,122 @@
+{
+  "tree1": {
+    "slug": "etFGNvsiFv",
+    "uuid": "53a83125-e16a-4024-b8f6-1e72679c7ddf",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 3328
+  },
+  "tree2": {
+    "slug": "oYtDty0fR6",
+    "uuid": "1d499f8b-5a1b-4966-9a35-10c0d3841e91",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 97
+  },
+  "palm1": {
+    "slug": "A6cKJYFsIb",
+    "uuid": "4c17decd-3087-4afe-9611-cfd92cca47cd",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 115
+  },
+  "palm2": {
+    "slug": "DsrrAYmucG",
+    "uuid": "21d44b5b-efef-4abd-96ad-fc59e4ad373b",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 113
+  },
+  "bush": {
+    "slug": "ooG6CkLyE8",
+    "uuid": "6bbb833e-26cb-4bf9-ae67-a31b98e30bd9",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 128
+  },
+  "rock1": {
+    "slug": "OQvi8PIZ40",
+    "uuid": "c6f65def-08c5-4c81-b17f-f37b171ad911",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 6
+  },
+  "rock2": {
+    "slug": "gYhoEOKItJ",
+    "uuid": "01671e28-0504-4db1-a5d5-af71ce0a6a1e",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 3078
+  },
+  "flower": {
+    "slug": "NBUxHir6FJ",
+    "uuid": "c25cb5dc-3cd3-470c-a08c-045af0c0fe3d",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 364
+  },
+  "grasstuft": {
+    "term": "grass",
+    "slug": "dz_TvM39dC7",
+    "uuid": "7082eec1-fb64-469d-939f-5ac71941f66c",
+    "author": "Danni Bittman",
+    "license": "CC-BY",
+    "kb": 538
+  },
+  "mushroom": {
+    "term": "mushroom",
+    "slug": "db1tjMhmiA",
+    "uuid": "c30dcc3b-c43d-4ce8-9b2d-6dd942b81fd7",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 10
+  },
+  "log": {
+    "term": "log",
+    "slug": "L4E32Wee6C",
+    "uuid": "89d5c7b9-0735-4640-913d-87261dfecd32",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 14
+  },
+  "stump": {
+    "term": "tree stump",
+    "slug": "nFvEbUX6LE",
+    "uuid": "f6caf11a-75ff-4a6e-9d87-28b44f685803",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 15
+  },
+  "star": {
+    "term": "star",
+    "slug": "Tyau1aS2r0",
+    "uuid": "da14b872-e62f-42f7-bbc3-ef37031d5530",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 7
+  },
+  "crystal": {
+    "term": "crystal",
+    "slug": "WzWPKHFMkL",
+    "uuid": "75211364-db9b-4004-8e35-18031f096da1",
+    "author": "iPoly3D",
+    "license": "CC0",
+    "kb": 35
+  },
+  "cloud": {
+    "term": "cloud",
+    "slug": "KdFNOVn1Gf",
+    "uuid": "d9268957-7e64-408f-8bb7-14125af33081",
+    "author": "Quaternius",
+    "license": "CC0",
+    "kb": 27
+  },
+  "butterfly": {
+    "term": "butterfly",
+    "slug": "e9NAQQrCbLu",
+    "uuid": "f4173d1a-1694-4f86-b1f9-429cbb3542f6",
+    "author": "Poly by Google",
+    "license": "CC-BY",
+    "kb": 3036
+  }
+}

@@ -25,5 +25,9 @@ yarn-error.log*
 dist/
 build/
 
+# Vite cache & dev screenshots
+.vite/
+shots/
+
 # OS files
 Thumbs.db

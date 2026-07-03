@@ -1,0 +1,33 @@
+{
+  "name": "a-year-in-orbit",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A cinematic 3D floating-islands love journey",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "shot": "node scripts/shot.mjs",
+    "analyze": "node scripts/analyze.mjs"
+  },
+  "dependencies": {
+    "@lottiefiles/dotlottie-react": "^0.13.0",
+    "@react-three/drei": "^9.114.3",
+    "@react-three/fiber": "^8.17.10",
+    "@react-three/postprocessing": "^2.16.3",
+    "framer-motion": "11.18.2",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.18",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "three": "^0.170.0",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "4.7.0",
+    "playwright": "^1.61.1",
+    "pngjs": "^7.0.0",
+    "vite": "6.4.3"
+  }
+}
