@@ -46,19 +46,51 @@ export function nearestSurfaceY(x, z, fallback = 0) {
   return best ? best[1] : fallback;
 }
 
-// A pool of valid points on the flat-ish top plateau (rejects edges / rock).
-export function surfacePool(maxR, topY, count = 140) {
+// A pool of points on the island's DOMINANT flat top. We raycast many samples,
+// find the most common height (the plateau) via a histogram, keep only samples
+// near it, and snap them to that single height. This guarantees trees/props
+// sit on the main surface — never on a stray high tip or a low sloped edge
+// (which was causing the "floating trees" on some islands).
+export function surfacePool(maxR, topY, count = 200) {
   if (cachedPool) return cachedPool;
-  const pts = [];
-  for (let i = 0; i < count * 10 && pts.length < count; i++) {
+
+  const raw = [];
+  for (let i = 0; i < count * 12 && raw.length < count * 2; i++) {
     const a = Math.random() * Math.PI * 2;
     const r = Math.sqrt(Math.random()) * maxR;
     const x = Math.cos(a) * r;
     const z = Math.sin(a) * r;
-    // first hit from above is always the true top surface at (x, z).
     const y = surfaceYAt(x, z);
-    if (y != null) pts.push([x, y, z]);
+    if (y != null) raw.push([x, y, z]);
   }
-  cachedPool = pts.length ? pts : [[0, topY, 0]];
+  if (!raw.length) {
+    cachedPool = [[0, topY, 0]];
+    return cachedPool;
+  }
+
+  // histogram of heights (0.25 buckets) → dominant plateau height
+  const bin = 0.25;
+  const counts = new Map();
+  for (const p of raw) {
+    const b = Math.round(p[1] / bin);
+    counts.set(b, (counts.get(b) || 0) + 1);
+  }
+  let bestBin = 0;
+  let bestC = -1;
+  for (const [b, c] of counts) {
+    if (c > bestC) {
+      bestC = c;
+      bestBin = b;
+    }
+  }
+  const plateauY = bestBin * bin;
+
+  // keep points near the plateau and snap them to that flat height
+  const band = 0.45;
+  const pts = raw
+    .filter((p) => Math.abs(p[1] - plateauY) <= band)
+    .map((p) => [p[0], plateauY, p[2]]);
+
+  cachedPool = pts.length ? pts : raw.map((p) => [p[0], plateauY, p[2]]);
   return cachedPool;
 }
