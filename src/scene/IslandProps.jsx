@@ -1,9 +1,10 @@
 import { useGLTF } from '@react-three/drei';
 import Prop from './Prop.jsx';
 import { nearestSurfaceY } from './islandSurface.js';
+import { asset } from '../lib/asset.js';
 
-const P = '/models/poly/props/';
-const N = '/models/poly/nature/';
+const P = asset('models/poly/props/');
+const N = asset('models/poly/nature/');
 
 // Per-chapter prop layouts. `lift` raises a prop above the ground surface
 // (for things stacked on other props, or flying: planes, balloons, heart).

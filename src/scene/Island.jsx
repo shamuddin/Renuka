@@ -5,16 +5,17 @@ import { Box3, Vector3 } from 'three';
 import IslandProps from './IslandProps.jsx';
 import Prop from './Prop.jsx';
 import { initSurface, surfacePool } from './islandSurface.js';
+import { asset } from '../lib/asset.js';
 
 // Floating island = a REAL island model (CC-BY vanAchen) auto-normalized to a
 // consistent size, decorated with CC0 Quaternius trees/rocks/flowers, plus the
 // chapter's themed props (see IslandProps).
 const MODELS = {
-  island: '/models/poly/terrain/island.glb',
-  pine: '/models/poly/nature/tree2.glb',
-  bush: '/models/poly/nature/bush.glb',
-  flower: '/models/poly/nature/flower.glb',
-  mountain: '/models/poly/terrain/mountain.glb',
+  island: asset('models/poly/terrain/island.glb'),
+  pine: asset('models/poly/nature/tree2.glb'),
+  bush: asset('models/poly/nature/bush.glb'),
+  flower: asset('models/poly/nature/flower.glb'),
+  mountain: asset('models/poly/terrain/mountain.glb'),
 };
 
 const TARGET_WIDTH = 6.5;

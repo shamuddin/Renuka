@@ -2,11 +2,12 @@ import { Suspense, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Clone, Sparkles, Html } from '@react-three/drei';
 import { Box3, Vector3 } from 'three';
+import { asset } from '../lib/asset.js';
 
 // Theme-park game: the real ferris wheel spins with a heart "cabin". Tap Stop
 // so your heart-cabin lands at the very top for the perfect view.
 function Wheel({ onResult }) {
-  const { scene } = useGLTF('/models/poly/props/ferriswheel.glb');
+  const { scene } = useGLTF(asset('models/poly/props/ferriswheel.glb'));
   const norm = useMemo(() => {
     const box = new Box3().setFromObject(scene);
     const size = new Vector3();
@@ -144,4 +145,4 @@ export default function StopTheWheel({ onWin }) {
   );
 }
 
-useGLTF.preload('/models/poly/props/ferriswheel.glb');
+useGLTF.preload(asset('models/poly/props/ferriswheel.glb'));

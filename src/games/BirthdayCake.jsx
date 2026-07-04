@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Sparkles } from '@react-three/drei';
 import { Box3, Vector3 } from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
+import { asset } from '../lib/asset.js';
 
 // Birthday game: sustain your blow to extinguish the cake's real candles.
 // Charge fills while you hold; flames flicker out; balloons + confetti + chime.
@@ -28,7 +29,7 @@ function playChime() {
 }
 
 function Cake({ onAllOut }) {
-  const { scene } = useGLTF('/models/poly/props/cake.glb');
+  const { scene } = useGLTF(asset('models/poly/props/cake.glb'));
   const clone = useMemo(() => scene.clone(true), [scene]);
 
   // the model's own candle flames use the "yellow" material — grab them
@@ -201,4 +202,4 @@ function Balloons() {
   );
 }
 
-useGLTF.preload('/models/poly/props/cake.glb');
+useGLTF.preload(asset('models/poly/props/cake.glb'));

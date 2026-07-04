@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF, useAnimations } from '@react-three/drei';
+import { asset } from '../../lib/asset.js';
 
 // First real downloaded model — a low-poly Flamingo (.glb) with a built-in
 // wing-flap animation. Source: three.js examples ("3 Dreams of Black", CC-BY).
@@ -14,7 +15,7 @@ export default function Flamingo({
   scale = 0.008,
 }) {
   const group = useRef();
-  const { scene, animations } = useGLTF('/models/flamingo.glb');
+  const { scene, animations } = useGLTF(asset('models/flamingo.glb'));
   const { actions } = useAnimations(animations, group);
 
   useEffect(() => {
@@ -43,4 +44,4 @@ export default function Flamingo({
   );
 }
 
-useGLTF.preload('/models/flamingo.glb');
+useGLTF.preload(asset('models/flamingo.glb'));
