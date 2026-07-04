@@ -27,3 +27,8 @@ build/
 
 # OS files
 Thumbs.db
+
+# Vite cache & dev screenshots
+.vite/
+shots/
+dist/
