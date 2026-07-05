@@ -22,9 +22,9 @@ const LAYOUTS = {
     { url: P + 'sandcastle.glb', x: -0.5, z: 0.8, h: 0.5 },
   ],
   movie: [
-    { url: P + 'tv.glb', x: 0, z: -0.8, h: 1.3, lift: 0.4 },
-    { url: P + 'sofa.glb', x: 0, z: 0.6, h: 0.7, yaw: Math.PI },
-    { url: P + 'popcorn.glb', x: 0.8, z: 0.5, h: 0.45 },
+    { url: P + 'tv.glb', x: 0, z: -0.7, h: 0.95, lift: 0.35 },
+    { url: P + 'sofa.glb', x: 0, z: 0.6, h: 0.6, yaw: Math.PI },
+    { url: P + 'popcorn.glb', x: 0.75, z: 0.4, h: 0.4 },
   ],
   food: [
     { url: P + 'foodtruck.glb', x: -0.6, z: -0.5, h: 1.5, yaw: 0.5 },

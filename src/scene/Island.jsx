@@ -43,25 +43,41 @@ export default function Island({ position = [0, 0, 0], chapter, seed = 1, bob = 
   const scatter = useMemo(() => {
     // build the raycast copy once, then sample REAL surface points
     initSurface(island.scene, norm);
-    const pool = surfacePool(norm.radius * 0.72, TOP_Y);
+    const pool = surfacePool(norm.radius * 0.8, TOP_Y);
     const rng = mulberry32(seed * 9973);
-    const pick = () => pool[Math.floor(rng() * pool.length)] || [0, TOP_Y, 0];
 
-    const trees = new Array(3 + Math.floor(rng() * 2)).fill(0).map(() => {
+    // Keep the CENTRE clear for the chapter's themed props; put greenery in the
+    // outer ring so trees never grow through the buildings/props.
+    const dist = (p) => Math.hypot(p[0], p[2]);
+    const maxD = Math.max(0.1, ...pool.map(dist));
+    const outer = pool.filter((p) => dist(p) > maxD * 0.52);
+    // seeded shuffle so picks are spread out and don't overlap
+    const shuffled = (() => {
+      const a = [...(outer.length ? outer : pool)];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    })();
+    let idx = 0;
+    const next = () => shuffled[idx++ % shuffled.length] || [0, TOP_Y, 0];
+
+    const trees = new Array(2 + Math.floor(rng() * 2)).fill(0).map(() => {
       const isBush = rng() < 0.4;
       return {
-        pos: pick(),
+        pos: next(),
         yaw: rng() * Math.PI * 2,
         url: isBush ? MODELS.bush : MODELS.pine,
-        h: isBush ? 0.7 + rng() * 0.4 : 1.3 + rng() * 0.7,
+        h: isBush ? 0.55 + rng() * 0.25 : 1.0 + rng() * 0.5,
       };
     });
     const flowers = new Array(4).fill(0).map(() => ({
-      pos: pick(),
+      pos: next(),
       yaw: rng() * Math.PI * 2,
-      h: 0.4 + rng() * 0.3,
+      h: 0.35 + rng() * 0.25,
     }));
-    const mtn = rng() < 0.5 ? { pos: pick(), yaw: rng() * Math.PI * 2 } : null;
+    const mtn = rng() < 0.4 ? { pos: next(), yaw: rng() * Math.PI * 2 } : null;
     return { trees, flowers, mtn };
   }, [seed, norm, island.scene]);
 
