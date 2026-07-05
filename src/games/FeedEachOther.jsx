@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { blip, chime } from './sound.js';
 
-// Food game: drag back from the fork to aim, release to fling a bite across to
-// your partner. Land 3 bites to win.
+// Food game: drag from the fork toward your partner to aim (a dotted arc shows
+// the throw), release to fling a bite into their mouth. Land 3 to win.
 const TARGET = 3;
 const FOODS = ['🍔', '🍕', '🍩', '🍦', '🍫'];
+const K = 0.13; // drag -> velocity
+const MAXV = 22; // speed cap
+const G = 0.45; // gravity
 
 export default function FeedEachOther({ onWin }) {
   const wrapRef = useRef(null);
@@ -21,35 +24,48 @@ export default function FeedEachOther({ onWin }) {
     canvas.height = H * dpr;
     ctx.scale(dpr, dpr);
 
-    const origin = { x: 70, y: H - 80 };
-    const mouth = { x: W - 80, y: H * 0.35, r: 40 };
-    let food = { ...origin, vx: 0, vy: 0, flying: false, emoji: FOODS[0] };
+    const origin = { x: 90, y: H - 90 };
+    const mouth = { x: W - 100, y: H * 0.42, r: 52 };
+    let food = { x: origin.x, y: origin.y, vx: 0, vy: 0, flying: false, emoji: FOODS[0] };
     let aiming = false;
-    let aim = { x: origin.x, y: origin.y };
+    let aimPt = null;
     let sc = 0;
     let done = false;
     let raf;
-    let mouthBounce = 0;
+    let bounce = 0;
 
     const pos = (e) => {
       const r = canvas.getBoundingClientRect();
-      return { x: (e.touches ? e.touches[0].clientX : e.clientX) - r.left, y: (e.touches ? e.touches[0].clientY : e.clientY) - r.top };
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
     };
+    const velFromAim = (p) => {
+      let vx = (p.x - origin.x) * K;
+      let vy = (p.y - origin.y) * K;
+      const m = Math.hypot(vx, vy);
+      if (m > MAXV) {
+        vx = (vx / m) * MAXV;
+        vy = (vy / m) * MAXV;
+      }
+      return { vx, vy };
+    };
+
     const down = (e) => {
       if (food.flying) return;
       aiming = true;
-      aim = pos(e);
+      aimPt = pos(e);
     };
     const move = (e) => {
-      if (aiming) aim = pos(e);
+      if (aiming) aimPt = pos(e);
     };
     const up = () => {
       if (!aiming) return;
       aiming = false;
-      food.vx = (origin.x - aim.x) * 0.16;
-      food.vy = (origin.y - aim.y) * 0.16;
+      const v = velFromAim(aimPt);
+      food.vx = v.vx;
+      food.vy = v.vy;
       food.flying = true;
-      blip(420, 0.1);
+      aimPt = null;
+      blip(430, 0.1);
     };
     canvas.addEventListener('pointerdown', down);
     canvas.addEventListener('pointermove', move);
@@ -57,53 +73,63 @@ export default function FeedEachOther({ onWin }) {
 
     const loop = () => {
       ctx.clearRect(0, 0, W, H);
-      mouthBounce *= 0.9;
+      bounce *= 0.9;
 
-      // partner / mouth
-      ctx.font = `${44 + mouthBounce}px serif`;
+      // partner mouth
+      ctx.font = `${46 + bounce}px serif`;
       ctx.fillText('😋', mouth.x - 26, mouth.y + 16);
 
-      // fork base
-      ctx.font = '40px serif';
-      ctx.fillText('🍴', origin.x - 20, origin.y + 14);
+      // fork
+      ctx.font = '42px serif';
+      ctx.fillText('🍴', origin.x - 22, origin.y + 14);
 
-      // aim guide
-      if (aiming) {
-        ctx.strokeStyle = 'rgba(201,79,124,0.6)';
-        ctx.setLineDash([5, 6]);
-        ctx.beginPath();
-        ctx.moveTo(origin.x, origin.y);
-        ctx.lineTo(origin.x + (origin.x - aim.x), origin.y + (origin.y - aim.y));
-        ctx.stroke();
-        ctx.setLineDash([]);
+      // aim trajectory preview
+      if (aiming && aimPt) {
+        const v = velFromAim(aimPt);
+        let sx = origin.x;
+        let sy = origin.y;
+        let svx = v.vx;
+        let svy = v.vy;
+        ctx.fillStyle = 'rgba(201,79,124,0.55)';
+        for (let i = 0; i < 34; i++) {
+          sx += svx;
+          sy += svy;
+          svy += G;
+          if (i % 2 === 0) {
+            ctx.beginPath();
+            ctx.arc(sx, sy, 3, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          if (sy > H) break;
+        }
       }
 
       // food
       if (food.flying) {
-        food.vy += 0.3;
+        food.vy += G;
         food.x += food.vx;
         food.y += food.vy;
-      } else if (!aiming) {
+      } else {
         food.x = origin.x;
-        food.y = origin.y;
+        food.y = origin.y - 6;
       }
-      ctx.font = '30px serif';
-      ctx.fillText(food.emoji, food.x - 15, food.y + 10);
+      ctx.font = '34px serif';
+      ctx.fillText(food.emoji, food.x - 17, food.y + 12);
 
       if (food.flying) {
         if (Math.hypot(food.x - mouth.x, food.y - mouth.y) < mouth.r) {
           sc++;
           setScore(sc);
           blip(760 + sc * 60, 0.12);
-          mouthBounce = 14;
-          food = { ...origin, vx: 0, vy: 0, flying: false, emoji: FOODS[sc % FOODS.length] };
+          bounce = 16;
+          food = { x: origin.x, y: origin.y, vx: 0, vy: 0, flying: false, emoji: FOODS[sc % FOODS.length] };
           if (sc >= TARGET && !done) {
             done = true;
             chime();
             setTimeout(() => onWin(), 900);
           }
-        } else if (food.y > H + 40 || food.x > W + 40 || food.x < -40) {
-          food = { ...origin, vx: 0, vy: 0, flying: false, emoji: FOODS[sc % FOODS.length] };
+        } else if (food.y > H + 60 || food.x > W + 60 || food.x < -60) {
+          food = { x: origin.x, y: origin.y, vx: 0, vy: 0, flying: false, emoji: FOODS[sc % FOODS.length] };
         }
       }
 
@@ -122,10 +148,10 @@ export default function FeedEachOther({ onWin }) {
   return (
     <div style={{ textAlign: 'center', userSelect: 'none' }}>
       <p className="font-serif" style={{ fontStyle: 'italic', color: 'var(--ink)', margin: '0 0 0.6rem' }}>
-        drag back from the fork &amp; release to feed each other 🍴 &nbsp;·&nbsp; {score}/{TARGET}
+        drag from the fork toward 😋, aim the arc, and release to feed 🍴 &nbsp;·&nbsp; {score}/{TARGET}
       </p>
       <div ref={wrapRef} style={{ position: 'relative', height: 'min(62vh, 540px)', borderRadius: '1rem', overflow: 'hidden', background: 'linear-gradient(180deg,#fff0d6 0%,#ffd9b3 60%,#ffc48a 100%)' }}>
-        <canvas style={{ width: '100%', height: '100%', display: 'block', touchAction: 'none' }} />
+        <canvas style={{ width: '100%', height: '100%', display: 'block', touchAction: 'none', cursor: 'crosshair' }} />
       </div>
     </div>
   );
